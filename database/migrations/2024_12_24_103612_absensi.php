@@ -15,8 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
             $table->foreign('user_id')->references('id')->on('users');
-            $table->enum('status', ['SUDAH', 'BELUM', 'ALPHA'])->nullable();
-            $table->string('keterangan')->nullable();
+            $table->enum('status', ['SUDAH', 'BELUM', 'ALPHA', 'SAKIT'])->nullable();
             $table->time('absen_at')->nullable();
             $table->timestamps();
         });

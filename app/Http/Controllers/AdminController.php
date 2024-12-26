@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Absensi;
+use Carbon\Carbon;
 use Validator;
 use App\Models\News;
 use App\Models\Admin;
@@ -218,12 +220,15 @@ class AdminController extends Controller
     public function listAbsensi(Request $request)
     {
         $selectedDate = $request->input('selected_date', now()->toDateString());
-        $attendances = Attendance::paginate(10);
+        $start = Carbon::parse($selectedDate)->startOfDay();
+        $end = Carbon::parse($selectedDate)->endOfDay();
+        $attendances = Absensi::whereBetween('created_at', [$start, $end])->paginate(10);
         return view('admin.listAbsensi', compact('selectedDate', 'attendances'));
     }
 
     public function storePelatihan(Request $request)
     {
+        // dd($request->all());
         $path = null;
         $path_file = null;
 
@@ -276,7 +281,7 @@ class AdminController extends Controller
                 ]);
                 if (isset($material['sub_materials'])) {
                     foreach ($material['sub_materials'] as $sub_material) {
-                        if ($sub_material['file']) {
+                        if (isset($sub_material['file'])) {
                             $path_file = $sub_material['file']->store('images');
                         }
                         Subtopics::create([

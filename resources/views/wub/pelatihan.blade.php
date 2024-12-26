@@ -12,8 +12,8 @@
 </head>
 
 <body>
-   @component('components.sidebar-wub')
-   @endcomponent
+    @component('components.sidebar-wub')
+    @endcomponent
 
     <!-- Main content wrapper -->
     <div class="container mt-5 pt-5">

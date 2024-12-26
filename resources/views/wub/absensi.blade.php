@@ -15,8 +15,18 @@
     @endcomponent
 
     <div class="container mt-5 pt-5">
-
-
+        @if (session('success'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Success!</strong> {{ session('success') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+        @if (session('error'))
+            <div class="alert alert-success alert-dismissible fade show" role="alert">
+                <strong>Error!</strong> {{ session('error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
         <!-- Header Section - Responsive pada mobile -->
         <div class="d-flex justify-content-between align-items-center mb-4">
             <h4 class="mb-0">Form Absensi</h4>
@@ -46,28 +56,29 @@
                                         <span class="input-group-text">
                                             <i class="bi bi-clock"></i>
                                         </span>
-                                        <input type="text" class="form-control" name="absen_at" value="{{ now()->format('H:i') }}"
-                                            readonly>
+                                        <input type="text" class="form-control" name="absen_at"
+                                            value="{{ now()->format('H:i') }}" readonly>
                                     </div>
                                 </div>
 
                                 <!-- Keterangan - 6 columns pada desktop, full pada mobile -->
                                 <div class="col-12 col-md-6">
-                                    <label for="keterangan" class="form-label">Keterangan</label>
-                                    <select class="form-select" id="keterangan" name="keterangan" required>
+                                    <label for="keterangan" class="form-label">Status</label>
+                                    <select class="form-select" id="keterangan" name="status"
+                                        {{ $already_checked ? 'disabled' : '' }}>
                                         <option value="" selected disabled>Pilih Keterangan</option>
-                                        <option value="hadir">Hadir</option>
-                                        <option value="sakit">Sakit</option>
-                                        <option value="izin">Izin</option>
+                                        <option value="SUDAH">Hadir</option>
+                                        <option value="SAKIT">Izin</option>
                                     </select>
                                 </div>
                             </div>
 
                             <!-- Submit Button - Sticky pada mobile -->
                             <div class="mt-4">
-                                <button type="submit" class="btn btn-primary w-100">
+                                <button type="submit" class="btn btn-primary w-100"
+                                    {{ $already_checked ? 'disabled' : '' }}>
                                     <i class="bi bi-check-circle me-2"></i>
-                                    Submit Absensi
+                                    {{ $already_checked ? 'Sudah Absensi' : 'Submit Absensi' }}
                                 </button>
                             </div>
                         </form>
@@ -92,17 +103,19 @@
                                         <tr>
                                             <th class="px-4">Tanggal</th>
                                             <th>Waktu</th>
-                                            <th>Keterangan</th>
                                             <th>Status</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        <tr>
-                                            <td class="px-4">{{ now()->subDay()->format('d/m/Y') }}</td>
-                                            <td>08:00</td>
-                                            <td>Hadir</td>
-                                            <td><span class="badge bg-success">Tepat Waktu</span></td>
-                                        </tr>
+                                        @foreach ($absens as $absensi)
+                                            <tr>
+                                                <td class="px-4">{{ now()->subDay()->format('d/m/Y') }}</td>
+                                                <td>{{ $absensi->absen_at }}</td>
+                                                <td><span
+                                                        class="badge bg-{{ $absensi->absensi_status_color }}">{{ $absensi->status }}</span>
+                                                </td>
+                                            </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -123,9 +136,9 @@
                                 <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
                                     <div>
                                         <span class="text-muted small">Total Hadir</span>
-                                        <h3 class="mb-0">0</h3>
+                                        <h3 class="mb-0">{{ $hadir }}</h3>
                                     </div>
-                                    <div class="rounded-circle bg-primary p-2">
+                                    <div class="rounded-circle bg-success p-2">
                                         <i class="bi bi-person-check text-white"></i>
                                     </div>
                                 </div>
@@ -133,25 +146,15 @@
                             <div class="col-6 col-lg-12">
                                 <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
                                     <div>
-                                        <span class="text-muted small">Tepat Waktu</span>
-                                        <h3 class="mb-0">0</h3>
+                                        <span class="text-muted small">Total Alpha/Izin</span>
+                                        <h3 class="mb-0">{{ $alpha }}</h3>
                                     </div>
-                                    <div class="rounded-circle bg-success p-2">
+                                    <div class="rounded-circle bg-danger p-2">
                                         <i class="bi bi-clock-history text-white"></i>
                                     </div>
                                 </div>
                             </div>
-                            <div class="col-6 col-lg-12">
-                                <div class="d-flex justify-content-between align-items-center p-3 bg-light rounded">
-                                    <div>
-                                        <span class="text-muted small">Terlambat</span>
-                                        <h3 class="mb-0">0</h3>
-                                    </div>
-                                    <div class="rounded-circle bg-warning p-2">
-                                        <i class="bi bi-exclamation-circle text-white"></i>
-                                    </div>
-                                </div>
-                            </div>
+
                         </div>
                     </div>
                 </div>

@@ -9,9 +9,6 @@ class Attendance extends Model
 {
     use HasFactory;
 
-    const STATUS_DONE = "SUDAH";
-    const STATUS_NOT = "BELUM";
-    const STATUS_ALPHA = "ALPHA";
 
     protected $table = 'attendance';
 
@@ -32,15 +29,7 @@ class Attendance extends Model
         return $this->hasMany(Progress::class);
     }
 
-    public function getAttendanceStatusColorAttribute() {
-        if ($this->status == self::STATUS_DONE) {
-            return 'success';
-        }elseif($this->status == self::STATUS_NOT){
-            return 'secondary';
-        }else{
-            return 'danger';
-        }
-    }
+   
 
     public function getProgressPercentageAttribute(){
        $totalSubTopic = $this->workshop->topics()

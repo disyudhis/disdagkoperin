@@ -75,7 +75,7 @@
                                             <td class="text-center">{{ $index + 1 }}</td>
                                             <td>
                                                 <div class="d-flex align-items-center">
-                                                    <img src="{{ $attendance->user->photo ?? 'https://avatar.iran.liara.run/public/boy' }}"
+                                                    <img src="{{ App\Http\Controllers\AuthController::getUrlForImage($attendance->image) ?? 'https://avatar.iran.liara.run/public/boy' }}"
                                                         class="rounded-circle me-2"
                                                         style="width: 40px; height: 40px; object-fit: cover;">
                                                     {{ $attendance->user->name }}
@@ -83,11 +83,11 @@
                                             </td>
                                             <td>{{ $attendance->user->nib }}</td>
                                             <td class="text-center">
-                                                <span class="badge bg-{{ $attendance->attendance_status_color }}">
+                                                <span class="badge bg-{{ $attendance->absensi_status_color }}">
                                                     {{ $attendance->status }}
                                                 </span>
                                             </td>
-                                            <td>{{ $attendance->check_in_time ? \Carbon\Carbon::parse($attendance->check_in_time)->format('H:i:s') : '-' }}
+                                            <td>{{ $attendance->absen_at ? \Carbon\Carbon::parse($attendance->absen_at)->format('H:i:s') : '-' }}
                                             </td>
                                         </tr>
                                     @empty

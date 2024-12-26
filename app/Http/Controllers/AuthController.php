@@ -7,6 +7,7 @@ use Carbon\Carbon;
 use App\Models\News;
 use App\Models\User;
 use App\Models\Topics;
+use App\Models\Absensi;
 use App\Models\Progress;
 use App\Models\Workshop;
 use App\Models\Subtopics;
@@ -54,7 +55,9 @@ class AuthController extends Controller
         $workshops = Workshop::whereDoesntHave('attendances', function ($query) use ($user) {
             $query->where('user_id', $user->id);
         })->get();
-        $attendances = Attendance::where('user_id', $user->id)->with(['workshop.topics.subtopics', 'progress'])->paginate(3);
+        $attendances = Attendance::where('user_id', $user->id)
+            ->with(['workshop.topics.subtopics', 'progress'])
+            ->paginate(3);
         return view('wub.pelatihan', compact('user', 'workshops', 'attendances'));
     }
 
@@ -119,7 +122,7 @@ class AuthController extends Controller
         $user = Auth::user();
         $workshops = Workshop::find($id);
         $topics = $workshops->topics;
-        foreach($topics as $topic){
+        foreach ($topics as $topic) {
             $subtopics = Subtopics::where('topic_id', $topic->id)->get();
         }
         try {
@@ -129,7 +132,7 @@ class AuthController extends Controller
             ]);
 
             if (!$user->is_enrolled) {
-                User::where('id', $user->id)->update( [
+                User::where('id', $user->id)->update([
                     'is_enrolled' => true,
                 ]);
             }
@@ -146,36 +149,64 @@ class AuthController extends Controller
         }
     }
 
-    public function detailWorkshop($id){
+    public function detailWorkshop($id)
+    {
         $user = Auth::user();
         $attendance = Attendance::find($id);
-        // $workshop = Workshop::find($attendance->workshop_id);
         $workshop = Workshop::with([
             'topics.subtopics',
             'attendances' => function ($query) {
                 $query->where('user_id', auth()->id());
             },
-            'attendances.progress'
+            'attendances.progress',
         ])->find($id);
         return view('wub.detailWorkshop', compact('user', 'workshop', 'attendance'));
     }
 
-    public function downloadFile($id){
+    public function downloadFile($id)
+    {
         $sub_materi = Subtopics::find($id);
         $path = substr($sub_materi->file, 8);
         return Storage::download($path);
     }
 
-    public function completeSubMateri($id){
+    public function completeSubMateri($id)
+    {
         Progress::where('subtopic_id', $id)->update([
-            'is_completed' => true
+            'is_completed' => true,
         ]);
 
         return redirect()->back();
     }
 
-    public function absensi(){
-        return view('wub.absensi');
+    public function absensi()
+    {
+        $already_checked = false;
+        $from = Carbon::now()->startOfDay();
+        $to = Carbon::now()->endOfDay();
+        $absensi = Absensi::where('user_id', operator: auth()->id())->whereBetween('created_at', [$from, $to])->latest()->first();
+        if($absensi){
+            $already_checked = true;
+        }
+        $absens = Absensi::where('user_id', auth()->id())->get();
+        $hadir = Absensi::where('user_id', auth()->id())->where('status', 'SUDAH')->count();
+        $alpha = Absensi::where('user_id', auth()->id())->whereNot('status', 'SUDAH')->count();
+        return view('wub.absensi', compact('already_checked', 'absens', 'hadir', 'alpha'));
+    }
+
+    public function submitAbsensi(Request $request)
+    {
+        $request->validate([
+            'status' => 'required',
+        ]);
+
+        Absensi::create([
+            'user_id' => auth()->id(),
+            'status' => $request->status,
+            'absen_at' => $request->absen_at,
+        ]);
+
+        return redirect()->back()->with('success', 'Anda berhasil absen!');
     }
 
     public function logout(Request $request)

@@ -12,17 +12,27 @@ class Absensi extends Model
     const STATUS_ALPHA = 'ALPHA';
     const STATUS_DONE = 'SUDAH';
     const STATUS_NOTYET = 'BELUM';
+    const STATUS_SICK = 'SAKIT';
 
     protected $table = 'absensi';
 
     protected $fillable = [
         'user_id',
         'status',
-        'keterangan',
         'absen_at'
     ];
 
     public function user() {
         return $this->belongsTo(User::class);
+    }
+
+    public function getAbsensiStatusColorAttribute() {
+        if ($this->status == self::STATUS_DONE) {
+            return 'success';
+        }elseif($this->status == self::STATUS_NOTYET){
+            return 'secondary';
+        }else{
+            return 'danger';
+        }
     }
 }

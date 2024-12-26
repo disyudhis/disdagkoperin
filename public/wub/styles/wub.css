@@ -1,0 +1,211 @@
+/* Gaya untuk navbar */
+.bg-navbar-custom {
+    background-color: #343a40; /* Warna navbar */
+}
+
+/* Gaya untuk offcanvas */
+.bg-canvas-custom {
+    background-color: #495057; /* Warna offcanvas */
+}
+
+/* Gaya untuk dropdown */
+.custom-dropdown {
+    background-color: #343a40; /* Warna dropdown */
+}
+
+/* Gaya untuk carousel */
+.carousel-item img {
+    height: 400px; /* Tinggi gambar carousel */
+    object-fit: cover; /* Memastikan gambar tidak terdistorsi */
+}
+
+/* Gaya untuk card */
+.card {
+    transition: transform 0.2s; /* Efek transisi saat hover */
+    min-height: 300px; /* Mengatur tinggi minimum card */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Efek zoom saat hover */
+}
+
+/* Gaya untuk footer */
+.footer {
+    background-color: #343a40; /* Warna footer */
+    margin-top: auto;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background-color: #333;
+    z-index: 999;
+}
+
+/* Gaya untuk marquee */
+.marquee {
+    white-space: nowrap; /* Menghindari pembungkus teks */
+    overflow: hidden; /* Menghindari overflow */
+    box-sizing: border-box; /* Mengatur box-sizing */
+}
+
+.marquee p {
+    display: inline-block; /* Menampilkan teks dalam satu baris */
+    animation: marquee 15s linear infinite; /* Animasi marquee */
+}
+
+@keyframes marquee {
+    from {
+        transform: translateX(100%);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+html,
+body {
+    height: 100%; /* Mengatur tinggi body dan html */
+    margin: 0; /* Menghapus margin default */
+}
+
+body {
+    display: flex;
+    flex-direction: column; /* Mengatur arah flex menjadi kolom */
+}
+
+.profile-container {
+    margin-top: 80px;
+    padding: 20px;
+}
+
+.container-fluid {
+    padding-bottom: 80px; /* Sedikit lebih besar dari tinggi footer */
+}
+
+.profile-image-container {
+    position: relative;
+    overflow: hidden;
+    border-radius: 50%;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.btn-custom {
+    transition: all 0.3s ease;
+}
+
+.btn-custom:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.card {
+    border: none;
+    border-radius: 15px;
+}
+
+.form-control {
+    border-radius: 8px;
+    border: 1px solid #e0e0e0;
+    padding: 12px;
+}
+
+.form-control:focus {
+    box-shadow: 0 0 0 3px rgba(13, 110, 253, 0.15);
+}
+
+.image-upload-container {
+    position: relative;
+    border: 2px dashed #dee2e6;
+    border-radius: 0.375rem;
+    padding: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.image-upload-container:hover {
+    border-color: #007bff;
+}
+
+.category-card {
+    background: linear-gradient(135deg, #1a237e 0%, #283593 100%);
+    color: white;
+    cursor: pointer;
+}
+
+.workshop-card {
+    border-radius: 15px;
+    overflow: hidden;
+}
+
+.workshop-card .card-img-top {
+    height: 200px;
+    object-fit: cover;
+}
+
+.workshop-status {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+    padding: 5px 10px;
+    border-radius: 20px;
+    font-size: 0.8rem;
+    font-weight: bold;
+}
+
+.progress {
+    height: 10px;
+    border-radius: 5px;
+}
+
+.progress-bar {
+    background-color: #1a237e;
+}
+
+.accordion-button:not(.collapsed) {
+    background-color: #f8f9fa;
+    color: #0d6efd;
+}
+
+.list-group-item:hover {
+    background-color: #f8f9fa;
+}
+
+.form-check-input:checked {
+    background-color: #0d6efd;
+    border-color: #0d6efd;
+}
+
+.main-content {
+    padding: 20px;
+    display: flex;
+    position: absolute;
+    min-height: calc(100vh - 60px); /* 60px adalah tinggi footer */
+    position: relative;
+    z-index: 1;
+}
+
+@media (max-width: 768px) {
+    .main-content {
+        margin-left: 0;
+        padding: 15px;
+    }
+
+    .main-content,
+    .footer {
+        width: 100%;
+    }
+
+    .card {
+        border-radius: 15px;
+    }
+
+    .table-responsive {
+        margin: 0 -1rem;
+    }
+
+    .table td, .table th {
+        white-space: nowrap;
+    }
+}
+
+

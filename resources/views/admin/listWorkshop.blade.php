@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="{{ asset('wub/styles/admin.css') }}">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
-    <title>Admin - List News</title>
+    <title>Admin - List Workshop</title>
 </head>
 
 <body>
@@ -30,7 +30,7 @@
 
                 <div class="card">
                     <div class="card-header">
-                        <h5 class="mb-0">Daftar Berita</h5>
+                        <h5 class="mb-0">Daftar Workshop</h5>
                     </div>
                     <div class="card-body">
                         <div class="table-responsive">
@@ -38,35 +38,46 @@
                                 <thead class="table-light">
                                     <tr>
                                         <th class="text-nowrap">No</th>
+                                        <th class="text-nowrap">Image</th>
                                         <th class="text-nowrap">Title</th>
                                         <th class="text-nowrap">Description</th>
-                                        <th class="text-nowrap">Date</th>
-                                        <th class="text-nowrap">Actions</th>
+                                        <th class="text-nowrap">Topics</th>
+                                        <th class="text-nowrap">Subtopics</th>
+                                        <th class="text-nowrap">Tanggal Dibuat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @forelse ($news as $item)
+                                    @forelse ($workshops as $item)
+                                        {{-- {{ dd($item) }} --}}
                                         <tr>
-                                            <td class="text-nowrap">{{ $news->firstItem() + $loop->index }}</td>
-                                            <td class="text-nowrap">{{ $item->title }}</td>
-                                            <td>{{ Str::limit($item->content, 50) }}</td>
-                                            <td class="text-nowrap">{{ $item->created_at->translatedFormat('d F Y') }}
+                                            <td class="text-nowrap">{{ $workshops->firstItem() + $loop->index }}</td>
+                                            <td><img src="{{ App\Http\Controllers\AuthController::getUrlForImage($item->image) }}"
+                                                    alt="{{ $item->name }}" style="width: 100px; height: 100px; ">
                                             </td>
-                                            <td class="text-nowrap">
-                                                <div class="d-flex gap-2">
-                                                    <a href="{{ route('admin.editNews', $item->id) }}"
-                                                        class="btn btn-warning btn-sm">Edit</a>
-                                                    <button type="button" class="btn btn-danger btn-sm"
-                                                        data-bs-toggle="modal"
-                                                        data-bs-target='#deleteModal{{ $item->id }}'>
-                                                        Delete
-                                                    </button>
-                                                </div>
+                                            <td class="text-nowrap">{{ $item->name }}</td>
+                                            <td>{{ Str::limit($item->description, 50) }}</td>
+                                            <td>
+                                                @foreach ($item->topics as $topic)
+                                                    <ul>
+                                                        <li>{{ $topic->title }}</li>
+                                                    </ul>
+                                                @endforeach
+                                            </td>
+                                            <td>
+                                                @foreach ($item->topics as $topic)
+                                                    @foreach ($topic->subtopics as $subtopic)
+                                                        <ul>
+                                                            <li>{{ $subtopic->title }}</li>
+                                                        </ul>
+                                                    @endforeach
+                                                @endforeach
+                                            </td>
+                                            <td class="text-nowrap">{{ $item->created_at->translatedFormat('d F Y') }}
                                             </td>
                                         </tr>
 
                                         <!-- Modal Konfirmasi Hapus -->
-                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                        {{-- <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
                                             aria-labelledby="deleteModalLabel{{ $item->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -93,17 +104,17 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div>
+                                        </div> --}}
                                     @empty
                                         <td colspan="12" class="text-center">
-                                            Belum ada iklan
+                                            Belum ada pelatihan
                                         </td>
                                     @endforelse
                                 </tbody>
                             </table>
                         </div>
                         <div class="d-flex justify-content-center mt-3">
-                            {{ $news->links() }}
+                            {{ $workshops->links('pagination::bootstrap-5') }}
                         </div>
                     </div>
                 </div>

@@ -15,13 +15,13 @@
     <body class="container register-body">
         <div class="bg"></div>
         <div class="register-box">
-            <h1>Register</h1>
+            <h3>Register</h3>
             <form method="POST" action="{{ route('register.store') }}">
                 @csrf
                 <label class="label-text" for="name">Nama Lengkap</label>
                 <input id="name" class="register-field" type="text" name="name" required>
-                <label class="label-text" for="nik">NIK (Nomor Induk Kependudukan)</label>
-                <input id="nik" class="register-field" type="text" name="nik" required>
+                <label class="label-text" for="nik">NIB (Nomor Induk Berusaha)</label>
+                <input id="nib" class="register-field" type="text" name="nib" required>
                 <label class="label-text" for="email">E-mail</label>
                 <input id="email" class="register-field" type="email" name="email" required>
                 <label class="label-text" for="password">Password</label>
@@ -65,6 +65,6 @@
             });
         </script>
         @endif
-        
+
     </body>
 </html>

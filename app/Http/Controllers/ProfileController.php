@@ -2,12 +2,14 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProfileUpdateRequest;
-use Illuminate\Http\RedirectResponse;
+use App\Models\User;
+use Illuminate\View\View;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Redirect;
-use Illuminate\View\View;
+use App\Http\Requests\ProfileUpdateRequest;
 
 class ProfileController extends Controller
 {
@@ -24,17 +26,38 @@ class ProfileController extends Controller
     /**
      * Update the user's profile information.
      */
-    public function update(ProfileUpdateRequest $request): RedirectResponse
+    public function update(Request $request): RedirectResponse
     {
-        $request->user()->fill($request->validated());
+        $user = User::find(Auth::id());
+        $request->validate([
+            'fullname' => 'sometimes',
+            'address' => 'sometimes|max:255',
+            'email' => 'sometimes|email|unique:users,email,' . $user->id,
+            'photo' => 'sometimes|image|max:2048',
+        ]);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+        if ($request->hasFile('photo') && $request->file('photo')->isValid()) {
+            $file = $request->file('photo');
+            $image = substr($user->photo, 8);
+            if ($user->photo) {
+                Storage::delete($image);
+                $path = $file->store('images');
+            } else {
+                $path = $file->store('images');
+            }
+        }
+        try {
+            $user->update([
+                'fullname' => $request->fullname,
+                'address' => $request->address,
+                'email' => $request->email,
+                'photo' => $path ? '/storage/' . $path : null,
+            ]);
+        } catch (\Exception $e) {
+            return redirect()->route('profile.edit')->with('error', 'Maaf, profile gagal di update');
         }
 
-        $request->user()->save();
-
-        return Redirect::route('profile.edit')->with('status', 'profile-updated');
+        return Redirect::route('profile.edit')->with('success', 'Proflile berhasil di update');
     }
 
     /**

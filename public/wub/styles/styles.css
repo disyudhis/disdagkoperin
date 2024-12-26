@@ -1,982 +1,707 @@
-/* <====== Landing Page Style ======> */ 
-body{
+/* Reset CSS */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box; /* Mengatur box-sizing untuk semua elemen */
+}
+
+/* Body dengan gambar latar belakang */
+.background-image {
+    background-image: url("../img/bg-image.jpg"); /* Ganti dengan path gambar latar belakang Anda */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Memusatkan gambar */
+    background-repeat: no-repeat; /* Menghindari pengulangan gambar */
+    height: 100vh; /* Tinggi penuh viewport */
+    display: flex; /* Menggunakan flexbox untuk pusat konten */
+    justify-content: center; /* Center content horizontally */
+    align-items: center; /* Center content vertically */
+}
+
+/* Konten di atas gambar latar belakang */
+.content {
+    max-height: 300px; /* Set max height untuk konten */
+    overflow-y: auto; /* Buat konten scrollable jika melebihi tinggi */
+    padding: 10px; /* Tambahkan padding di dalam konten */
+    background-color: rgba(255, 255, 255, 0.8); /* Warna latar belakang dengan transparansi */
+    border-radius: 5px; /* Sudut melengkung */
+    margin-bottom: 20px; /* Spasi di bawah konten */
+}
+
+/* Gaya untuk tombol */
+.action-button {
+    padding: 10px 20px; /* Padding untuk tombol */
+    background-color: #ffa500; /* Warna oranye untuk tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
+}
+
+.action-button:hover {
+    background-color: #ff8c00; /* Warna saat hover (lebih gelap) */
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    .content {
+        width: 90%; /* Lebar konten lebih kecil di mobile */
+    }
+}
+
+/* <====== Landing Page Style======> */
+body {
     margin: 0;
     padding: 0;
     overflow-x: hidden;
-    width: 100%;
-    height: 100%;
+    font-family: "Poppins", sans-serif; /* Set default font */
+    background-color: #f8f9fa; /* Background color */
 }
 
-.row.one{
+/* Header Styles */
+.header {
     background-color: rgba(40, 2, 116, 1);
-    width: 100%;
-    height: auto;
-    display: flex; 
-    align-items: center; 
-    justify-content: space-between; 
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 20px; /* Padding for spacing */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1); /* Bayangan untuk header */
+}
+
+.logo-container {
+    flex: 1;
+}
+
+.logo {
+    max-width: 100px; /* Set max width for logo */
+    height: auto; /* Maintain aspect ratio */
+}
+
+/* Styles for Menu Container */
+.menu-container {
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-end; /* Memindahkan menu ke kanan */
+    position: relative; /* Untuk posisi tombol hamburger */
+}
+
+/* Hamburger Styles */
+.hamburger {
+    display: none; /* Hide hamburger by default */
+    font-size: 30px;
+    cursor: pointer;
+    color: white; /* Warna hamburger */
+    margin-left: 10px; /* Tambahkan margin kiri untuk memberi ruang dari tepi */
+}
+
+/* Styles for Menu */
+.menu {
+    display: flex; /* Tampilkan menu secara horizontal di desktop */
+    list-style: none; /* Menghapus bullet points */
+    padding: 0; /* Menghapus padding */
+    margin: 0; /* Menghapus margin */
 }
 
 .menu-item {
-    text-decoration: underline; /* Underline by default */
-    text-decoration-thickness: 2px; /* Thickness of underline */
-    color: white; /* Define a default text color explicitly */
-    cursor: pointer;
-    display: inline-block; /* Ensure padding is applied correctly */
+    margin: 0 15px; /* Margin antar menu item di desktop */
 }
 
-.menu-item:hover {
-    text-decoration: none; /* Remove underline on hover */
-    background-color: white; /* White background on hover */
-    color: rgba(40, 2, 116, 1) !important; /* Blue text color on hover */
-    border-radius: 6px !important;
-    transition: background-color 0.2s ease; /* Transition effect for color */
+.menu-item a {
+    color: white; /* Warna teks menu di desktop */
+    text-decoration: none; /* Menghapus underline */
 }
 
-.menu-item a{
-    text-decoration: underline; /* Underline by default */
-    color: white; /* Define a default text color explicitly */
-    display: inline-block; /* Ensure padding is applied correctly */
+.login {
+    padding: 6px 20px; /* Padding untuk tombol login */
+    font-weight: 700; /* Bold text */
+    font-size: 15px; /* Ukuran font */
+    background-color: rgba(254, 122, 54, 1); /* Warna latar belakang tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
 }
 
-.menu-item:hover a{
-    text-decoration: none; /* Remove underline on hover */
-    color: rgba(40, 2, 116, 1) !important; /* Blue text color on hover */
+.login:hover {
+    background-color: rgba(233, 246, 255, 1); /* Warna saat hover */
 }
 
-/* Container styling */
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .hamburger {
+        display: block; /* Show hamburger on small screens */
+    }
+
+    .menu {
+        display: none; /* Hide menu on small screens */
+        flex-direction: column; /* Stack menu items vertically */
+        position: absolute;
+        background-color: rgba(40, 2, 116, 1); /* Background color for menu */
+        top: 60px; /* Position below header */
+        left: 0;
+        width: 100%; /* Full width for mobile menu */
+        z-index: 1000; /* Ensure menu is above other elements */
+        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Shadow for menu */
+        transition: max-height 0.3s ease; /* Transisi untuk efek dropdown */
+        max-height: 0; /* Mulai dengan tinggi maksimum 0 */
+        overflow: hidden; /* Sembunyikan overflow */
+    }
+
+    .menu.active {
+        display: flex; /* Show menu when active */
+        max-height: 300px; /* Set tinggi maksimum saat aktif */
+    }
+
+    .menu-item {
+        margin: 10px 0; /* Margin untuk menu item di mode mobile */
+        text-align: center; /* Center text untuk menu item */
+    }
+
+    .menu-item a {
+        padding: 10px; /* Padding untuk area klik yang lebih besar */
+        color: white; /* Warna teks menu */
+        text-decoration: none; /* Menghapus underline */
+        display: block; /* Membuat area klik lebih besar */
+    }
+
+    .close-menu {
+        font-size: 30px; /* Ukuran font untuk tombol close */
+        color: white; /* Warna tombol close */
+        cursor: pointer; /* Pointer saat hover */
+        margin: 10px; /* Margin untuk tombol close */
+        text-align: center; /* Center text untuk tombol close */
+    }
+}
+
+/* Styles for Desktop (tidak diubah) */
+@media (min-width: 769px) {
+    .menu {
+        display: flex; /* Tampilkan menu secara horizontal di desktop */
+        justify-content: flex-end; /* Memindahkan menu ke kanan */
+    }
+
+    .menu-item {
+        margin: 0 15px; /* Margin antar menu item di desktop */
+    }
+
+    .menu-item a {
+        color: white; /* Warna teks menu di desktop */
+        text-decoration: none; /* Menghapus underline */
+    }
+}
+
+/* Additional styles for other sections can go here... */
+
+/* Additional styles for Banner */
 .row.two {
-    width: 100%;
-    height: 600px; /* Set the desired height */
-    overflow: hidden; /* Ensure no overflow from the image */
-    position: relative; /* Position relative for absolute positioning of child elements */
+    position: relative; /* Positioning for overlay */
+    overflow: hidden; /* Hide overflow */
 }
 
-/* Image container to ensure proper size and positioning */
 .image-container {
-    position: absolute; /* Position absolutely within .row.two */
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    overflow: hidden; /* Ensure no overflow */
+    position: relative; /* Positioning for overlay */
 }
 
-/* Image styling to cover the container */
-.image-container img {
-    width: 100%;
-    height: 100%; 
-    display: block; /* Remove extra space below the image */
+.banner-image {
+    width: 100%; /* Membuat gambar responsif */
+    height: 400px; /* Set tinggi untuk banner */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Memusatkan gambar */
+    display: flex; /* Menggunakan flexbox untuk overlay */
+    align-items: center; /* Menyelaraskan item secara vertikal */
+    justify-content: center; /* Menyelaraskan item secara horizontal */
+    position: relative; /* Untuk posisi overlay */
+    margin: 0; /* Menghapus margin untuk memastikan tidak ada ruang di sekitar */
+    padding: 0; /* Menghapus padding untuk memastikan tidak ada ruang di sekitar */
 }
 
-/* Styling for the overlay */
 .overlay {
-    position: absolute;
+    position: absolute; /* Posisi overlay di atas gambar */
     top: 0;
     left: 0;
-    width: 100%;
-    height: 100%;
+    right: 0;
+    bottom: 0;
     background: linear-gradient(
-        to bottom, /* Adjust this if you want a different gradient direction */
-        rgba(38, 77, 204, 0.7) 5%, /* More transparent color #416EFF */
-        rgba(15, 42, 130, 0.7) 44%, /* More transparent color #2D5EFF */
-        rgba(15, 30, 81, 0.7) 83% /* More transparent color #0F1E51 */
-    );
-    display: flex;
-    flex-direction: column;
-    z-index: 1;
-    pointer-events: none;
-}
-
-/* Optional: Make sure the image is in front of the overlay */
-.image-container img {
-    position: relative;
-    z-index: 0;
-}
-
-.row.two.information{
-    width: 100%;
-    height: auto;
-    padding-left: 55px;
-    color: aliceblue;
-    font-family: "Poppins", sans-serif;
-    display: flex; 
-    flex-direction: column;
-    align-items: start; 
-    box-sizing: border-box;
-}
-
-.transparent-bg {
-    position: relative; /* Ensure the element's position is relative */
-    overflow: hidden; /* Hide overflow to keep pseudo-element inside */
-}
-
-.transparent-bg::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-    background: linear-gradient(
-        to bottom, /* Adjust this if you want a different gradient direction */
-        rgba(38, 77, 204, 0.7) 5%, /* More transparent color #416EFF */
-        rgba(15, 42, 130, 0.7) 44%, /* More transparent color #2D5EFF */
-        rgba(15, 30, 81, 0.7) 83% /* More transparent color #0F1E51 */
-    ),
-    url('../img/banner.jpeg'); /* Set the path to your background image */
-    background-size: cover; /* Adjust the image size */
-    background-position: center; /* Center the background image */
-    background-repeat: no-repeat; /* Prevent repeating of the background image */
-    z-index: -1; /* Place behind the content */
-}
-
-.description-container {
-    position: relative; /* Ensure the container's position is relative */
-    display: inline-block; /* Fit the container to the content width */
-    padding: 20px; /* Optional: Add padding if needed */
-    box-sizing: border-box; /* Include padding in the element’s total width and height */
-}
-
-.description-container::before {
-    content: "";
-    position: absolute;
-    top: 0;
-    left: 0;
-    width: 90%;
-    height: 85%;
-    background: rgba(254, 122, 54, 0.7); /* White overlay with 50% opacity */
-    z-index: -1; /* Place behind the content */
-}
-
-.description {
-    position: relative; /* Ensure the text is above the overlay */
-    color: aliceblue; /* Set text color to ensure it's readable */
-    z-index: 1; /* Ensure the text is above the overlay */
-    font-size: 15px;
-    line-height: 1.5;
-    text-align: start; 
-    margin-top: -5px;
-    margin-bottom: 35px;
-    max-width: 90%;
-}
-
-/* Specific padding for the second <p> element */
-.description-container .description:nth-of-type(2) {
-    margin-top: -17px; /* Adjust the padding for the second paragraph */
-}
-
-.row.three {
-    width: 100%;
-    height: 700px;
-    margin-top: -40px;
-    padding-bottom: 40px;
-    font-family: "Poppins", sans-serif;
-    background-color: rgba(233, 246, 255, 1);
-    padding-top: 100px;
-    padding-left: 60px;
-    display: flex;
-    flex-direction: column;
-    align-items: center; /* Centers children horizontally */
-    text-align: center;
-    box-sizing: border-box; /* Ensure padding is included in width calculation */
-}
-
-.row.three .learn-more-wub {
-    padding: 10px 20px; /* Adjust padding for size */
-    margin-left: 25px;
-    margin-right: 14px;
-    font-weight: 700;
-    font-size: 16px; /* Adjust font size */
-    font-family: "Poppins", sans-serif;
-    background-color: rgba(254, 122, 54, 1);
-    color: rgba(233, 246, 255, 1);
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    text-align: center; /* Center the text */
-    max-width: 200px; /* Optional: Limit the maximum width */
-}
-
-.row.three button.learn-more-wub:hover{
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
-}
-
-.row.three li:not(.learn-more-wub) {
-    padding-right: 1px; 
-    padding-top: 6px; 
-    padding-bottom: 4px; 
-}
-
-.description-info {
-    font-size: 24px;
-    line-height: 1.5;
-    text-align: start; 
-    margin-top: -5px;
-    margin-bottom: 55px;
-    max-width: 90%; /* Adjust based on design needs */
-}
-
-.row.three h3 {
-    margin-top: 100px;
-    font-size: 20px;
-}
-
-.row.four {
-    width: 100%;
-    height: 650px;
-    background-color: rgba(65, 110, 255, 1);
-    padding-top: 170px;
-    display: flex;
-    flex-wrap: wrap; 
-    justify-content: center; 
-    align-items: flex-start; 
-}
-
-
-.row.five{
-    width: 100%;
-    height: 550px;
-    background-color: rgba(40, 2, 116, 1);
-    padding-top: 20px;
-    display: flex;
-    justify-content: center;
-    align-items: flex-start;
-}
-
-.row.six{
-    width: 100%;
-    height: 40px;
-    background-color: rgba(33, 66, 171, 1);
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.col.col-1-row-1 img{
-    width: 40px;
-    height: 50px;
-    padding-left: 50px;
-}
-
-.col.col-2-row-1 {
-    display: flex; 
-    font-family: Poppins;
-    font-weight: bold;
-    font-size: 15px;
-    align-items: center; 
-    padding-right: 2px;
-}
-
-.col.col-2-row-1 ul {
-    list-style-type: none; 
-    margin: 0; 
-    padding: 0; 
-    display: flex; 
-}
-
-.col.col-2-row-1 li {
-    margin-left: 15px; 
-    color: rgba(233, 246, 255, 1); 
-    padding-left: 2px;
-}
-
-.col.col-2-row-1 button.login {
-    padding-left: 28px; 
-    padding-right: 28px;
-    padding-top: 4px; 
-    padding-bottom: 4px; 
-    margin-left: 25px;
-    margin-right: 14px;
-    font-weight: 700;
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-    background-color: rgba(254, 122, 54, 1);
-    color: rgba(233, 246, 255, 1);
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-}
-
-.col.col-2-row-1 button.login:hover{
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
-}
-
-.col.col-2-row-1 li:not(.login) {
-    padding-right: 1px; 
-    padding-top: 6px; 
-    padding-bottom: 4px; 
+        to bottom,
+        rgba(0, 0, 139, 0.7),
+        rgba(0, 0, 255, 0.7)
+    ); /* Gradasi dari biru gelap ke
+    biru biasa */
+    z-index: 1; /* Pastikan overlay di atas gambar */
 }
 
 .text-container {
-    margin-top: auto; /* Pushes the container to the bottom */
-    font-family: "Poppins", sans-serif;
-    color: white; /* Text color */
-    padding: 20px; /* Add padding if needed */
-    text-align: start; /* Align text to start (left) */
-    width: 40%;
-    box-sizing: border-box;
+    position: relative; /* Untuk memastikan teks di atas overlay */
+    z-index: 2; /* Pastikan teks di atas overlay */
+    color: white; /* Mengubah warna font menjadi putih */
+    text-align: center; /* Center text */
 }
 
-.text-container h1{
-    font-size: 50px;
-    margin-bottom: 5px;
+.text-container h1,
+.text-container h3 {
+    margin: 0; /* Menghapus margin default */
 }
 
-.col.col-1-row-2 img{
-    width: 100%;
-    background-size: cover;
-    height: 680px;
+.text-container h1 {
+    font-size: 2.5em; /* Larger font size for main heading */
 }
 
-.col.col-1-row-3 {
-    margin-bottom: 50px;
+.text-container h3 {
+    font-size: 1.5em; /* Font size for subheading */
+    margin-top: 10px; /* Space between heading and subheading */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .text-container h1 {
+        font-size: 2em; /* Adjust font size for smaller screens */
+    }
+
+    .text-container h3 {
+        font-size: 1.2em; /* Adjust font size for smaller screens */
+    }
+}
+
+/* Gaya untuk tombol close */
+.close-menu {
+    font-size: 30px; /* Ukuran font untuk tombol close */
+    color: white; /* Warna tombol close */
+    cursor: pointer; /* Pointer saat hover */
+    margin-left: auto; /* Memindahkan tombol ke kanan */
+    padding: 10px; /* Padding untuk area klik yang lebih besar */
+}
+
+/* Styles for Information Section */
+.row.three {
+    padding: 20px; /* Tambahkan padding untuk ruang di sekitar konten */
+    text-align: center; /* Center text */
+}
+
+.label-info {
+    font-size: 2em; /* Ukuran font untuk label informasi */
+    margin-bottom: 10px; /* Spasi di bawah label */
+    color: rgba(40, 2, 116, 1); /* Warna label */
+}
+
+.description-info {
+    font-size: 1.1em; /* Ukuran font untuk deskripsi */
+    line-height: 1.6; /* Tinggi baris untuk keterbacaan */
+    margin-bottom: 20px; /* Spasi di bawah deskripsi */
+}
+
+.learn-more-wub {
+    padding: 10px 20px; /* Padding untuk tombol */
+    font-size: 16px; /* Ukuran font untuk tombol */
+    background-color: rgba(254, 122, 54, 1); /* Warna latar belakang tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
+}
+
+.learn-more-wub:hover {
+    background-color: rgba(233, 246, 255, 1); /* Warna saat hover */
+}
+
+/* Styles for About Section */
+.row.four {
+    display: flex; /* Menggunakan flexbox untuk tata letak */
+    align-items: center; /* Menyelaraskan item secara vertikal */
+    padding: 20px; /* Tambahkan padding untuk ruang di sekitar konten */
+    text-align: center; /* Center text untuk tampilan yang lebih baik */
+    background-color: #416eff; /* Warna latar belakang menggunakan #416EFF */
+}
+
+.col {
+    flex: 1; /* Membuat kolom tumbuh secara merata */
+    margin: 10px; /* Margin antar kolom */
+}
+
+.about-img {
+    width: 100%; /* Membuat gambar responsif */
+    max-width: 400px; /* Set max width untuk gambar */
+    height: auto; /* Memastikan proporsi gambar tetap */
+    border-radius: 10px; /* Sudut melengkung untuk gambar */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk gambar */
+}
+
+.about-title,
+.about-description {
+    color: white; /* Mengubah warna font menjadi putih */
+}
+
+.about-title {
+    font-size: 2em; /* Ukuran font untuk judul */
+    margin-bottom: 10px; /* Spasi di bawah judul */
+}
+
+.about-description {
+    font-size: 1.1em; /* Ukuran font untuk deskripsi */
+    line-height: 1.6; /* Tinggi baris untuk keterbacaan */
+    margin: 0 auto; /* Center text */
+    max-width: 600px; /* Set max width untuk deskripsi */
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .row.four {
+        flex-direction: column; /* Stack kolom secara vertikal pada layar kecil */
+        text-align: center; /* Center text pada layar kecil */
+    }
+
+    .about-img {
+        max-width: 80%; /* Mengurangi ukuran gambar pada layar kecil */
+    }
+}
+
+/* Styles for Terms and Service Section */
+.row.five {
+    padding: 40px; /* Tambahkan padding untuk ruang di sekitar konten */
+    background-color: #280274; /* Warna latar belakang menggunakan #416EFF */
+    text-align: center; /* Center text */
+}
+
+.row.five h1,
+.row.five h2,
+.row.five .description-tas,
+.learn-more-tos {
+    color: white; /* Mengubah warna font menjadi putih */
+}
+
+.row.five h1 {
+    font-size: 2.5em; /* Ukuran font untuk judul */
+    margin-bottom: 10px; /* Spasi di bawah judul */
+}
+
+.row.five h2 {
+    font-size: 1.8em; /* Ukuran font untuk subjudul */
+    margin-bottom: 20px; /* Spasi di bawah subjudul */
+}
+
+.description-tas {
+    font-size: 1.1em; /* Ukuran font untuk deskripsi */
+    line-height: 1.6; /* Tinggi baris untuk keterbacaan */
+    margin-bottom: 20px; /* Spasi di bawah deskripsi */
+}
+
+.learn-more-tos {
+    padding: 10px 20px; /* Padding untuk tombol */
+    font-size: 16px; /* Ukuran font untuk tombol */
+    background-color: rgba(254, 122, 54, 1); /* Warna latar belakang tombol */
+    color: white; /* Warna teks tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
+}
+
+.learn-more-tos:hover {
+    background-color: rgba(233, 246, 255, 1); /* Warna saat hover */
+}
+
+/* Styles for Footer */
+.row.six {
+    background-color: #2142ab; /* Warna latar belakang footer */
+    color: white; /* Warna teks footer */
+    text-align: center; /* Center text */
+    padding: 20px; /* Padding untuk footer */
+}
+
+footer {
+    margin: 0; /* Menghapus margin untuk footer */
+    font-size: 14px; /* Ukuran font untuk footer */
+}
+
+/* Gaya untuk tas-box */
+.tas-box {
+    max-width: 800px; /* Set max width untuk tas-box */
+    margin: 20px auto; /* Center tas-box dengan margin atas dan bawah */
+    padding: 20px; /* Tambahkan padding di dalam tas-box */
+    background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang dengan transparansi */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk tas-box */
+    text-align: center; /* Center text */
+}
+
+/* Gaya untuk checkbox */
+.tas-checkbox {
     display: flex;
-    flex-direction: column;
-    align-items: center; 
+    font-weight: bold;
+    align-items: center; /* Center vertically */
+    justify-content: center; /* Center horizontally */
+    margin: 20px 0; /* Margin atas dan bawah */
 }
 
-.col.col-1-row-3 button.learn-more-1{
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    background-color: rgba(254, 122, 54, 1);
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 6px;
-    padding: 10px 40px;
-    margin: 20px 35px 0;
+.tas-checkbox input[type="checkbox"] {
+    margin-right: 10px; /* Spasi antara checkbox dan label */
+    transform: scale(1.5); /* Membesarkan checkbox */
 }
 
-.col.col-1-row-4 {
-    flex: 1; 
-    max-width: 400px; 
-    margin: 0 30px; 
-    padding-left: 70px;
+/* Gaya untuk tombol */
+.btn-accept, .btn-disagree {
+    padding: 10px 20px; /* Padding untuk tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
 }
 
-.col.col-2-row-4{
-    max-width: 800px;
-    flex: 1; 
-    text-align: center; 
-    font-family: "Poppin", sans-serif;
-    color: rgba(233, 246, 255, 1); 
-    text-align: center;
+.btn-accept {
+    background-color: grey; /* Warna abu-abu untuk tombol setuju saat dinonaktifkan */
+    color: white; /* Warna teks tombol */
+    cursor: not-allowed; /* Pointer saat hover */
 }
 
-.col.col-2-row-4 h2{
-    font-size: 35px;
-    margin-top: 2px;
-    padding-left: 20px;
-    font-weight: 700;
-    font-style: normal;
+.btn-accept.enabled {
+    background-color: #ff8c00; /* Warna oranye untuk tombol setuju saat aktif */
+    cursor: pointer; /* Pointer saat hover */
 }
 
-.col.col-2-row-4 p{
-    font-size: 28px;
-    font-weight: 600;
-    padding-left: 20px;
-    margin-top: -5px;
-    text-align: start;
-    font-style: normal;
-}
-.col.col-1-row-5{
-    font-family: "Poppin", sans-serif;
-    color: rgba(233, 246, 255, 1); 
-    font-weight: 700;
-    text-align: center;
-}
-
-.col.col-1-row-5 h1{
-    flex: 1;
-    font-size: 60px;
-    font-weight: 800;
-    padding-top: 15px;
-    font-style: normal;
-}
-
-.col.col-1-row-5 h2{
-    flex: 1;
-    font-size: 30px;
-    font-weight: 800;
-    text-align: start;
-    margin-top: -8px;
-    padding-left: 100px;
-
-}
-
-.col.col-1-row-6{
-    color: rgba(233, 246, 255, 1);
-    font-size: 14px;
-    font-family: "Roboto Mono", monospace;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.items-container {
-    margin-top: -100px;
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-.learn-more-1,.learn-more-2,.learn-more-3 {
-    padding-left: 5px; 
-    padding-right: 5px;
-    padding-top: 10px; 
-    padding-bottom: 10px; 
-    margin-left: 100px;
-    margin-right: 100px;
-    color: rgba(233, 246, 255, 1);
-    background-color: rgba(254, 122, 54, 1);
-    border-radius: 6px;
-}
-
-.lable-info{
-    margin-top: 90px; 
-    font-weight: 700;
-    font-size: 40px;
-}
-
-.lable-detail{
-    font-weight: 700;
-    font-family: "Poppin", sans-serif;
-    font-size: 40px;
-    margin-bottom: 25px;
-    margin-top: 25px;
-}
-
-.about-img{
-    width: 400px;
-    height: 500px;
-}
-
-.description-tas{
-    flex: 1;
-    padding-left: 100px;
-    text-align: start;
-    font-style: normal;
-    font-weight: 700;
-    font-size: 20px;
-    margin-top: -5px;
-    margin-bottom: 40px;
-}
-
-.learn-more-tos{
-    padding: 10px 20px; /* Adjust padding for size */
-    margin-left: 25px;
-    margin-right: 14px;
-    font-weight: 700;
-    font-size: 16px; /* Adjust font size */
-    font-family: "Poppins", sans-serif;
-    background-color: rgba(254, 122, 54, 1);
-    color: rgba(233, 246, 255, 1);
-    cursor: pointer;
-    border: none;
-    border-radius: 6px;
-    text-align: center; /* Center the text */
-    max-width: 200px; /* Optional: Limit the maximum width */
-}
-
-.row.five button.learn-more-tos:hover{
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
-}
-
-.row.five li:not(.learn-more-tos) {
-    padding-right: 1px; 
-    padding-top: 6px; 
-    padding-bottom: 4px; 
-}
-
-/* <====== TAS Style ======> */ 
-body.tas-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-
-.tas-body .bg {
-    background: url('../img/bg-image.jpg');
-    height: 100vh;
-    width: 100%;
-    position: absolute;
-    background-size: cover;
-    z-index: -1;
-    filter: blur(5px);
-}
-
-.tas-box{
-    max-width: 500px;
-    background-color: rgba(233, 246, 255, 1);
-    padding: 25px 40px;
-    opacity: 0.8;
-    display: flex;
-}
-
-.tas-checkbox{
-    margin-top: 12px;
-}
-
-.terms-description{
-    padding: 0 15px;
-    margin-top: -15px;
-    margin-bottom: 10px;
-    height: 550px;
-    overflow-y: auto;
-    font-size: 15px;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.terms-description h1{
-    text-align: center;
-}
-
-.terms-description::-webkit-scrollbar{
-    width: 4px;
-    background-color: rgb(233, 246, 255, 1);
-}
-
-.terms-description::-webkit-scrollbar-thumb{
-    background-color: rgba(254, 122, 54, 1);
-}
-
-.buttons-tas{
-    display: flex;
-    align-items: center;
-    justify-content: space-evenly;
-    padding: none;
-    margin-top: 27px;
-    margin-bottom: 5px;
+.btn-disagree {
+    background-color: grey; /* Warna oranye untuk tombol tidak setuju */
+    color: white; /* Warna teks tombol */
 }
 
 .btn-disagree:hover {
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
+    background-color: #ff8c00; /* Warna saat hover */
 }
 
-.btn-accept:not(:disabled):hover {
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
+/* Responsif untuk tas-box */
+.tas-box {
+    max-width: 800px; /* Set max width untuk tas-box */
+    margin: 20px auto; /* Center tas-box dengan margin atas dan bawah */
+    padding: 20px; /* Tambahkan padding di dalam tas-box */
+    background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang dengan transparansi */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk tas-box */
 }
 
-.btn-accept, .btn-disagree{
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    background-color: rgba(254, 122, 54, 1);
-    border: none;
-    color: white;
-    cursor: pointer;
-    border-radius: 6px;
-    padding: 10px 15px;
-    margin: 0 -85px;
+/* Responsif untuk teks dan tombol */
+.tas-box h1 {
+    font-size: 2em; /* Ukuran font untuk judul */
 }
 
-.btn-accept[disabled]{
-    opacity: 0.6;
-    cursor: not-allowed;
+.tas-box p {
+    font-size: 1em; /* Ukuran font untuk paragraf */
 }
 
-input[type="checkbox"] {
-    height: 15px;
-    width: 15px;
-    accent-color: rgba(254, 122, 54, 1);
-    appearance: none;
-    content: "";
-    display: inline-block;
-    vertical-align: middle;
-    border: 1px solid black; 
-    border-radius: 3px; 
-    transition: background-color 0.3s ease; 
+/* Responsif untuk tombol */
+.buttons-tas {
+    display: flex;
+    justify-content: space-between; /* Spasi antar tombol */
+    flex-wrap: wrap; /* Membungkus tombol pada layar kecil */
 }
 
-
-input[type="checkbox"]:checked {
-    background-color: rgba(254, 122, 54, 1); 
+.btn-accept, .btn-disagree {
+    flex: 1; /* Membuat tombol tumbuh secara merata */
+    margin: 5px; /* Margin antar tombol */
 }
 
+/* Media Queries untuk layar kecil */
+@media (max-width: 768px) {
+    .tas-box {
+        padding: 15px; /* Kurangi padding pada layar kecil */
+    }
 
-input[type="checkbox"]::before {
-    content: ""; 
-    display: inline-block;
-    margin-bottom: 2.8px;
-    margin-left: 0.7px;
-    width: 10px; 
-    height: 5px; 
-    border-bottom: 2px solid white; 
-    border-left: 2px solid white; 
-    transform: rotate(-45deg); 
-    opacity: 0; 
-    transition: opacity 0.3s ease; 
+    .tas-box h1 {
+        font-size: 1.5em; /* Ukuran font lebih kecil pada layar kecil */
+    }
+
+    .tas-box p {
+        font-size: 0.9em; /* Ukuran font lebih kecil pada layar kecil */
+    }
+
+    .buttons-tas {
+        flex-direction: column; /* Stack tombol secara vertikal */
+    }
+
+    .btn-accept, .btn-disagree {
+        width: 100%; /* Lebar penuh untuk tombol */
+    }
 }
 
-input[type="checkbox"]:checked::before {
-    opacity: 1; 
-}
-
-/* <====== Login Style ======> */ 
-body.login-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+/* Gaya untuk halaman login */
+.login-body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh; /* Tinggi penuh viewport */
+    background-color: #f8f9fa; /* Warna latar belakang */
+    font-family: "Poppins", sans-serif; /* Set default font */
 }
 
 .bg {
-    background: url('../img/bg-image.jpg');
-    height: 100vh;
-    width: 100%;
     position: absolute;
-    background-size: cover;
-    z-index: -1;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../img/bg-image.jpg"); /* Ganti dengan path gambar latar belakang Anda */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Memusatkan gambar */
+    z-index: -1; /* Di belakang konten */
 }
 
-.login-modal{
-    background-color: rgba(233, 246, 255, 1);
-    padding: 105px 75px 40px 75px;
-    border-radius: 25px;
-    margin-left: 50px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-}
-
-.login-modal h1{
-    margin-left: -35px;
-    margin-top: -65px;
-    padding-bottom: 20px;
+.login-modal {
+    background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang dengan transparansi */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk modal */
+    padding: 20px; /* Padding di dalam modal */
+    max-width: 400px; /* Lebar maksimum modal */
+    width: 100%; /* Lebar penuh pada layar kecil */
+    text-align: center; /* Center text */
 }
 
 .login-logo {
-    height: 200px;
-    width: 148;
-    padding-left: 65px;
+    max-width: 100px; /* Set max width untuk logo */
+    margin-bottom: 20px; /* Spasi di bawah logo */
 }
 
-.login-modal form {
-    display: flex;
-    flex-direction: column;
-}
-
+/* Gaya untuk input-container */
 .input-container {
-    position: relative;
-    margin-left: -25px;
-    margin-bottom: 10px;
+    position: relative; /* Untuk posisi ikon */
+    margin-bottom: 20px; /* Spasi antar input */
+    display: flex; /* Menggunakan flexbox untuk tata letak */
+    align-items: center; /* Center vertically */
 }
 
-.input_field{
-    padding: 6px 100px 6px 4px;
-    margin-left: 35px;
-
-}
-
-.sign-in_button {
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    background-color: rgba(254, 122, 54, 1);
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 12px;
-    padding: 12px 15px;
-    margin: 15px 35px 0;
-}
-
-.sign-in_button:hover {
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
-}
-
-form p:nth-of-type(1) {
-    margin-top: 16px;
-    text-align: center;
-    margin-bottom: -5px;
-}
-
-form p:nth-of-type(2) {
-    margin-top: 16px;
-    text-align: center;
-    margin-bottom: -22px;
-}
-
-.login-body .label-text {
-    margin-left: -32px;
+.label-text {
+    display: block; /* Menampilkan label sebagai block */
+    margin-bottom: 5px; /* Spasi di bawah label */
+    font-weight: 600; /* Bold text */
+    text-align: left; /* Rata kiri */
+    flex: 1; /* Menggunakan flex untuk mengatur lebar label */
 }
 
 .material-symbols-outlined {
-  font-variation-settings:
-  'FILL' 0,
-  'wght' 400,
-  'GRAD' 0,
-  'opsz' 24;
-  position: absolute;
-  top: 48%;
-  transform: translateY(-50%);
-  left: -10%;
-  padding: 0 25px; 
+    position: absolute; /* Posisi ikon */
+    left: 10px; /* Spasi dari kiri */
+    top: 50%; /* Memusatkan ikon secara vertikal */
+    transform: translateY(-50%); /* Memusatkan ikon secara vertikal */
+    color: #aaa; /* Warna ikon */
 }
 
-/* <====== Register Style ======> */
-body.register-body {
-    margin: 0;
-    padding: 0;
-    height: 100vh;
+.input_field {
+    width: 100%; /* Lebar penuh untuk input */
+    padding: 10px 10px 10px 40px; /* Padding di dalam input, spasi untuk ikon */
+    border: 1px solid #ccc; /* Border untuk input */
+    border-radius: 5px; /* Sudut melengkung */
+    font-size: 16px; /* Ukuran font */
+}
+
+.input_field:focus {
+    border-color: #ffa500; /* Warna border saat fokus */
+    outline: none; /* Menghapus outline default */
+}
+
+.sign-in_button {
+    background-color: #ffa500; /* Warna oranye untuk tombol */
+    color: white; /* Warna teks tombol */
+    padding: 10px 20px; /* Padding untuk tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
+    margin-bottom: 20px; /* Jarak antara tombol dan teks di bawahnya */
+}
+
+.sign-in_button:hover {
+    background-color: #ff8c00; /* Warna saat hover */
+}
+
+.error-message {
+    color: red; /* Warna merah untuk pesan error */
+    font-size: 12px; /* Ukuran font untuk pesan error */
+}
+
+/* Gaya untuk tautan */
+a {
+    color: #007bff; /* Warna tautan */
+    text-decoration: none; /* Menghapus underline */
+}
+
+a:hover {
+    text-decoration: underline; /* Menambahkan underline saat hover */
+}
+
+/* Gaya untuk halaman register */
+.register-body {
     display: flex;
     justify-content: center;
     align-items: center;
+    height: 100vh; /* Tinggi penuh viewport */
+    background-color: #f8f9fa; /* Warna latar belakang */
+    font-family: "Poppins", sans-serif; /* Set default font */
 }
 
-.register-box{
-    background-color: rgba(233, 246, 255, 1);
-    padding: 105px 75px 40px 75px;
-    border-radius: 14px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    font-style: normal;
-} 
-
-.register-box form{
-    display: flex;
-    flex-direction: column;
+.bg {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-image: url("../img/bg-image.jpg"); /* Ganti dengan path gambar latar belakang Anda */
+    background-size: cover; /* Menutupi seluruh area */
+    background-position: center; /* Memusatkan gambar */
+    z-index: -1; /* Di belakang konten */
 }
 
-.register-box h1{
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    margin-top: -69px;
-    margin-bottom: 30px;
-    margin-left: -45px;
+.register-box {
+    background-color: rgba(255, 255, 255, 0.9); /* Warna latar belakang dengan transparansi */
+    border-radius: 10px; /* Sudut melengkung */
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Bayangan untuk modal */
+    padding: 20px; /* Padding di dalam modal */
+    max-width: 400px; /* Lebar maksimum modal */
+    width: 100%; /* Lebar penuh pada layar kecil */
+    text-align: center; /* Center text */
 }
 
-.register-box .label-text{
-    margin-left: -15px;
+.label-text {
+    display: block; /* Menampilkan label sebagai block */
+    margin-bottom: 5px; /* Spasi di bawah label */
+    font-weight: 600; /* Bold text */
+    text-align: left; /* Rata kiri */
 }
 
-.register-field{
-    margin-left: 30px;
-    width: 350px;
-    padding: 4px 5px;
-    margin-top: 5px;
-    margin-bottom: 8px;
+.register-field {
+    width: 100%; /* Lebar penuh untuk input */
+    padding: 10px; /* Padding di dalam input */
+    border: 1px solid #ccc; /* Border untuk input */
+    border-radius: 5px; /* Sudut melengkung */
+    font-size: 16px; /* Ukuran font */
+    margin-bottom: 15px; /* Jarak antar input */
+}
+
+.register-field:focus {
+    border-color: #ffa500; /* Warna border saat fokus */
+    outline: none; /* Menghapus outline default */
 }
 
 .sign-up_button {
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    background-color: rgba(254, 122, 54, 1);
-    border: none;
-    color: white;
-    font-size: 16px;
-    cursor: pointer;
-    border-radius: 12px;
-    padding: 8px 15px;
-    margin: 17px 75px 0;
+    background-color: #ffa500; /* Warna oranye untuk tombol */
+    color: white; /* Warna teks tombol */
+    padding: 10px 20px; /* Padding untuk tombol */
+    border: none; /* Menghapus border */
+    border-radius: 5px; /* Sudut melengkung */
+    cursor: pointer; /* Pointer saat hover */
+    transition: background-color 0.3s; /* Transisi untuk hover */
 }
 
 .sign-up_button:hover {
-    border: 1px rgba(254, 122, 54, 1);
-    background-color: white;
-    color: rgba(254, 122, 54, 1);
-    transition: background-color 0.2s ease;
+    background-color: #ff8c00; /* Warna saat hover */
 }
 
-.container {
-    max-width: 100%;
-    margin: 0 auto;
+/* Gaya untuk tautan */
+a {
+    color: #007bff; /* Warna tautan */
+    text-decoration: none; /* Menghapus underline */
 }
 
-.swal2-confirm.btn-success {
-    background-color: #28a745 !important;
-    border: none !important;
-    color: white !important;
-    outline: none !important; 
-    box-shadow: none !important; 
+a:hover {
+    text-decoration: underline; /* Menambahkan underline saat hover */
 }
 
-.swal2-confirm.btn-fail {
-    background-color: #b52018 !important;
-    border: none !important;
-    color: white !important;
-    outline: none !important; 
-    box-shadow: none !important; 
-}
 
-.swal2-container {
-    z-index: 99999; 
-}
-
-/* <====== Dashboard Style ======> */
-.custom-dropdown {
-    position: relative;
-    left: -110px !important; 
-}
-
-.navbar {
-    height: 70px; 
-}
-
-.offcanvas-custom {
-    margin-top: 70px; 
-    height: calc(100% - 70px); 
-}
-
-.bg-canvas-custom {
-    background-color: rgba(30, 27, 37, 1);
-}
-
-.bg-navbar-custom {
-    background-color: rgba(56, 52, 67, 1);
-}
-
-.navbar-brand {
-    background-color: black;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 70px; 
-    padding: 0 20px;
-}
-
-.carousel-item{
-    height: 30rem;
-    background: #f6f1f1;
-    color: white;
-    position: relative;
-}
-
-.container{
-    bottom: 0;
-    left: 0;
-    right: 0;
-    padding-bottom: 5px
-}
-
-.progress-container {
-    padding-right: 0;
-    margin-right: -20px;
-    margin-left: -70px;
-    margin-top: 5px;
-}
-
-.percentage {
-    padding-left: 0;
-    margin-left: -150px;
-}
-
-.lable-material{
-    padding-left: 0;
-    margin-left: 20px;
-}
-
-.label-material p {
-    overflow: hidden;
-    text-overflow: ellipsis;
-    display: -webkit-box;
-    -webkit-line-clamp: 2; /* number of lines to show */
-    -webkit-box-orient: vertical;
-    white-space: normal;
-}
-
-.carousel-item {
-    position: relative;
-    width: 100%;
-    height: 100%;
-}
-
-.carousel-item img {
-    width: 100%;
-    height: 500px; /* Adjust height as needed */
-    object-fit: contain;
-    margin: 0 auto; /* Center horizontally if needed */
-}
-
-.carousel-caption {
-    background-color: rgba(0, 0, 0, 0.5); /* Add background color for better text readability */
-    padding: 10px;
-}
-
-.card-img-top {
-    object-fit: cover;
-}
-
-.container-c{
-    bottom: 0;
-    left: 40px;
-    right: 0;
-    padding-bottom: 50px
-}
-
-.footer {
-    position: relative;
-    overflow: hidden;
-    background: #343a40; /* Adjust background color as needed */
-    color: #fff;
-    padding: 10px 0;
-  }
-  
-  .marquee {
-    display: flex;
-    width: 100%;
-    overflow: hidden;
-    position: relative;
-  }
-  
-  .marquee p {
-    display: flex;
-    white-space: nowrap;
-    padding-left: 100%; /* Start text off-screen to the right */
-    animation: marquee 15s linear infinite;
-    margin: 0;
-  }
-  
-  @keyframes marquee {
-    0% {
-      transform: translateX(0); /* Start text off-screen to the right */
-    }
-    100% {
-      transform: translateX(-100%); /* End text off-screen to the left */
-    }
-  }
-  
-
-
-/* <====== Admin Dashboard Style ======> */
-.bg-blue {
-    background-color: rgba(67, 11, 223, 0.97);
-}
-
-#editor-container {
-    height: 200px;
-}
-
-.ql-align-left {
-    text-align: left !important;
-}

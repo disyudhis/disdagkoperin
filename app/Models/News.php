@@ -9,7 +9,7 @@ class News extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['title', 'description', 'image', 'date'];
+    protected $fillable = ['title', 'content', 'image'];
 
     protected $casts = [
         'date' => 'datetime',

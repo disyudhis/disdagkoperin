@@ -8,136 +8,136 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.bundle.min.js">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link href="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.snow.css" rel="stylesheet">
-    <link rel="stylesheet" href="{{ asset('wub/styles/styles.css') }}">
+    <link rel="stylesheet" href="{{ asset('wub/styles/admin.css') }}">
     <title>Admin - List Announcement</title>
 </head>
 
 <body>
-    <div class="container-fluid">
-        <div class="row flex-nowrap">
-            <div class="col-auto col-lg-3 col-xl-2 px-sm-2 px-0 bg-blue text-white">
-                <div class="d-flex flex-column align-items-center align-items-sm-center min-vh-100 px-3 pt-3">
-                    <a href="" class="d-flex align-items-center pb-4">
-                        <img src="{{ asset('wub/img/logoAdmin.png') }}" alt="" width="140" height="50">
-                    </a>
-                    <img src="https://media.geeksforgeeks.org/wp-content/uploads/20190802021607/geeks14.png"
-                        class="rounded-circle mt-2" alt="Circular Image" width="150">
-                    <h3 class="text-white mt-3">Admin</h3>
-                    <ul class="nav nav-pills flex-column mb-sm-auto mb-0  me-5 align-items-center align-items-sm-start"
-                        id="menu">
-                        <li class="nav-item mt-3 me-4">
-                            <a href="{{ route('admin.dashboard') }}" class="nav-link align-middle px-0 d-flex align-items-center">
-                                <i class="fs-4 me-1 bi-speedometer2 text-white"></i>
-                                <span class="ms-2 fs-5 d-none d-sm-inline text-white ">Dashboard</span>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-0 me-4">
-                            <a href="#inputDataMenu" data-bs-toggle="collapse"
-                                class="nav-link align-middle px-0 d-flex align-items-center">
-                                <i class="fs-4 me-1 bi-database-add text-white"></i>
-                                <span class="ms-2 fs-5 d-none d-sm-inline text-white">Input Data</span>
-                            </a>
-                            <ul class="collapse nav flex-column ms-1" id="inputDataMenu" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="{{ route('admin.createPelatihan') }}" class="nav-link px-0"> <span
-                                            class="text-white">Pelatihan</span></a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.createMateri') }}" class="nav-link px-0"> <span
-                                            class="text-white">Materi</span></a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.createIklan') }}" class="nav-link px-0"> <span
-                                            class="text-white">Iklan</span></a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.createAnnouncement') }}" class="nav-link px-0"> <span
-                                            class="text-white">Pengumuman</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item mt-0 me-4">
-                            <a href="#listDataMenu" data-bs-toggle="collapse"
-                                class="nav-link align-middle px-0 d-flex align-items-center">
-                                <i class="fs-4 me-1 bi bi-layout-three-columns text-white"></i>
-                                <span class="ms-2 fs-5 d-none d-sm-inline text-white">List Data</span>
-                            </a>
-                            <ul class="collapse nav flex-column ms-1" id="listDataMenu" data-bs-parent="#menu">
-                                <li class="w-100">
-                                    <a href="#" class="nav-link px-0"> <span class="text-white">Pelatihan</span></a>
-                                </li>
-                                <li>
-                                    <a href="#" class="nav-link px-0"> <span class="text-white">Materi</span></a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.listNews') }}" class="nav-link px-0"> <span class="text-white">Iklan</span></a>
-                                </li>
-                                <li>
-                                    <a href="{{ route('admin.listAnnouncements') }}" class="nav-link px-0"> <span class="text-white">Pengumuman</span></a>
-                                </li>
-                            </ul>
-                        </li>
-                        <li class="nav-item mt-0 me-4">
-                            <a href="#" class="nav-link align-middle px-0 d-flex align-items-center text-nowrap">
-                                <i class="fs-4 me-1 bi-people text-white"></i>
-                                <span class="ms-2 fs-5 d-none d-sm-inline text-white ">Enroll Peserta</span>
-                            </a>
-                        </li>
-                        <li class="nav-item mt-5 me-4">
-                            <a href="#" class="nav-link align-middle px-0 d-flex align-items-center text-nowrap">
-                                <i class="fs-4 me-1 bi-box-arrow-left text-white"></i>
-                                <span class="ms-2 fs-5 d-none d-sm-inline text-white ">Log-Out</span>
-                            </a>
-                        </li>
-                    </ul>
-                </div>
-            </div>
+    <div id="wrapper" style="width: 100%; height: 100vh">
+        @component('components.sidebar')
+        @endcomponent
 
-            <div class="col px-4 my-4">
-                <h1>Announcements</h1>
-                @if(session('success'))
-                    <div class="alert alert-success">{{ session('success') }}</div>
+        <div id="page-content-wrapper">
+            <div class="container-fluid">
+                <button id="sidebarToggle" class="btn btn-secondary d-md-none">
+                    <i class="bi bi-list"></i> <!-- Hamburger icon -->
+                </button>
+                @if (session('success'))
+                    <div class="alert alert-success alert-dismissible fade show" role="alert">
+                        {{ session('success') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
                 @endif
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>No</th>
-                            <th>Title</th>
-                            <th>Description</th>
-                            <th>Date</th>
-                            <th>Actions</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach($announcements as $announcement)
-                            <tr>
-                                <td>{{ $announcements->firstItem() + $loop->index }}</td>
-                                <td>{{ $announcement->title }}</td>
-                                <td>{{ Str::limit($announcement->description, 50) }}</td>
-                                <td>{{ $announcement->date->translatedFormat('d F Y') }}</td>
-                                <td>
-                                    <a href="{{ route('admin.editAnnouncement', $announcement->id) }}" class="btn btn-warning btn-sm">Edit</a>
-                                    <form action="{{ route('admin.deleteAnnouncement', $announcement->id) }}" method="POST" style="display:inline;">
-                                        @csrf
-                                        @method('DELETE')
-                                        <button type="submit" class="btn btn-danger btn-sm">Delete</button>
-                                    </form>
-                                </td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-                <div class="d-flex justify-content-center">
-                    {{ $announcements->links() }}
+
+                <div class="card">
+                    <div class="card-header">
+                        <h5 class="mb-0">Daftar Pengumuman</h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-hover">
+                                <thead class="table-light">
+                                    <tr>
+                                        <th class="text-nowrap">No</th>
+                                        <th class="text-nowrap">Title</th>
+                                        <th class="text-nowrap">Description</th>
+                                        <th class="text-nowrap">Date</th>
+                                        <th class="text-nowrap">Actions</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @forelse ($announcements as $announcement)
+                                        <tr>
+                                            <td class="text-nowrap">{{ $announcements->firstItem() + $loop->index }}
+                                            </td>
+                                            <td class="text-nowrap">{{ $announcement->title }}</td>
+                                            <td>{{ Str::limit($announcement->description, 50) }}</td>
+                                            <td class="text-nowrap">
+                                                {{ $announcement->created_at->translatedFormat('d F Y') }}
+                                            </td>
+                                            <td class="text-nowrap">
+                                                <div class="d-flex gap-2">
+                                                    <a href="{{ route('admin.editAnnouncement', $announcement->id) }}"
+                                                        class="btn btn-warning btn-sm">Edit</a>
+
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal{{ $announcement->id }}">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
+                                        </tr>
+
+                                        <!-- Modal Konfirmasi Hapus -->
+                                        <div class="modal fade" id="deleteModal{{ $announcement->id }}" tabindex="-1"
+                                            aria-labelledby="deleteModalLabel{{ $announcement->id }}"
+                                            aria-hidden="true">
+                                            <div class="modal-dialog">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title"
+                                                            id="deleteModalLabel{{ $announcement->id }}">Konfirmasi
+                                                            Hapus Pengumuman</h5>
+                                                        <button type="button" class="btn-close" data-bs-dismiss="modal"
+                                                            aria-label="Close"></button>
+                                                    </div>
+                                                    <div class="modal-body">
+                                                        Apakah Anda yakin ingin menghapus pengumuman
+                                                        "{{ $announcement->title }}"?
+                                                    </div>
+                                                    <div class="modal-footer">
+                                                        <button type="button" class="btn btn-secondary"
+                                                            data-bs-dismiss="modal">Batal</button>
+                                                        <form
+                                                            action="{{ route('admin.deleteAnnouncement', $announcement->id) }}"
+                                                            method="POST" style="display:inline;">
+                                                            @csrf
+                                                            @method('DELETE')
+                                                            <button type="submit" class="btn btn-danger">Hapus</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    @empty
+                                        <td colspan="12" class="text-center">Belum ada Pengumuman</td>
+                                    @endforelse
+                                </tbody>
+                            </table>
+                        </div>
+                        <div class="d-flex justify-content-center mt-3">
+                            {{ $announcements->links() }}
+                        </div>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
 
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.6/dist/umd/popper.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/js/bootstrap.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/quill@2.0.2/dist/quill.js"></script>
     <script src="js/rteScript.js"></script>
+
+    <script>
+        // JavaScript untuk toggle sidebar
+        $(document).ready(function() {
+            $('#sidebarToggle').click(function() {
+                $('#sidebar-wrapper').toggleClass('show'); // Menyembunyikan atau menampilkan sidebar
+                $('#page-content-wrapper').toggleClass(
+                    'sidebar-open'); // Menyesuaikan konten saat sidebar ditoggle
+            });
+
+            $('#sidebarClose').click(function() {
+                $('#sidebar-wrapper').removeClass('show'); // Menyembunyikan sidebar
+                $('#page-content-wrapper').removeClass(
+                    'sidebar-open'); // Menyesuaikan konten saat sidebar ditutup
+            });
+        });
+    </script>
 </body>
+
 </html>

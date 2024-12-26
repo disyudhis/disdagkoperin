@@ -2,11 +2,19 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Auth;
-use App\Models\Admin;
+use Validator;
 use App\Models\News;
+use App\Models\Admin;
+use App\Models\Topics;
+use App\Models\Workshop;
+use App\Models\Subtopics;
+use App\Models\Attendance;
 use App\Models\Announcement;
+use Illuminate\Http\Request;
+use GuzzleHttp\Psr7\UploadedFile;
+use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Storage;
 
 class AdminController extends Controller
 {
@@ -19,11 +27,15 @@ class AdminController extends Controller
     {
         $credentials = $request->only('email', 'password');
 
-        if (Auth::guard('admin')->attempt($credentials)) {
+        if (Auth::attempt($credentials)) {
+            $request->session()->put('user_id', Auth::id());
+            $request->session()->regenerate();
             return redirect()->route('admin.dashboard');
         }
 
-        return redirect()->back()->withErrors(['email' => 'Invalid credentials']);
+        return redirect()
+            ->back()
+            ->withErrors(['email' => 'Invalid credentials']);
     }
 
     public function dashboard()
@@ -34,11 +46,11 @@ class AdminController extends Controller
         return view('admin.dashboard', compact('announcementCount', 'newsCount'));
     }
 
-    public function logout()
+    public function logout(Request $request)
     {
-        Auth::guard('admin')->logout();
-        $request()->session()->invalidate();
-        $request()->session()->regenerateToken();
+        Auth::logout();
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
         return redirect()->route('admin.login');
     }
 
@@ -49,14 +61,14 @@ class AdminController extends Controller
 
     public function listAnnouncements()
     {
-    $announcements = Announcement::paginate(10);
-    return view('admin.listAnnouncements', compact('announcements'));
+        $announcements = Announcement::paginate(10);
+        return view('admin.listAnnouncements', compact('announcements'));
     }
 
     public function editAnnouncement($id)
     {
-    $announcement = Announcement::findOrFail($id);
-    return view('admin.editAnnouncement', compact('announcement'));
+        $announcement = Announcement::findOrFail($id);
+        return view('admin.editAnnouncement', compact('announcement'));
     }
 
     public function storeAnnouncement(Request $request)
@@ -65,58 +77,56 @@ class AdminController extends Controller
             'title' => 'required|max:255',
             'description' => 'required',
             'image' => 'nullable|image',
-            'date' => 'required|date',
         ]);
-    
+
         $path = null;
         if ($request->hasFile('image') && $request->file('image')->isValid()) {
             $file = $request->file('image');
             $path = $file->store('images');
         }
-    
+
         Announcement::create([
             'title' => $request->title,
             'description' => $request->description,
             'image' => $path ? '/storage/' . $path : null,
-            'date' => $request->date,
         ]);
-    
+
         return redirect()->route('admin.dashboard')->with('success', 'Announcement created successfully!');
     }
 
     public function updateAnnouncement(Request $request, $id)
     {
-    $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-        'image' => 'nullable|image',
-        'date' => 'required|date',
-    ]);
+        $request->validate([
+            'title' => 'required|max:255',
+            'description' => 'required',
+            'image' => 'nullable|image',
+        ]);
 
-    $announcement = Announcement::findOrFail($id);
+        $announcement = Announcement::findOrFail($id);
+        $path = $announcement->image;
+        $image = substr($path, 8);
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
+            Storage::delete($image);
+            $path = $file->store('images');
+        }
 
-    $path = $announcement->image;
-    if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        $file = $request->file('image');
-        $path = $file->store('images');
-    }
+        $announcement->update([
+            'title' => $request->title,
+            'description' => $request->description,
+            'image' => $path ? '/storage/' . $path : $announcement->image,
+        ]);
 
-    $announcement->update([
-        'title' => $request->title,
-        'description' => $request->description,
-        'image' => $path ? '/storage/' . $path : $announcement->image,
-        'date' => $request->date,
-    ]);
-
-    return redirect()->route('admin.listAnnouncements')->with('success', 'Announcement updated successfully!');
+        return redirect()->route('admin.listAnnouncements')->with('success', 'Announcement updated successfully!');
     }
 
     public function deleteAnnouncement($id)
     {
-    $announcement = Announcement::findOrFail($id);
-    $announcement->delete();
-
-    return redirect()->route('admin.listAnnouncements')->with('success', 'Announcement deleted successfully!');
+        $announcement = Announcement::findOrFail($id);
+        $image = substr($announcement->image, 8);
+        Storage::delete($image);
+        $announcement->delete();
+        return redirect()->route('admin.listAnnouncements')->with('success', 'Announcement deleted successfully!');
     }
 
     public function createNews()
@@ -126,17 +136,16 @@ class AdminController extends Controller
 
     public function listNews()
     {
-        $news = News::paginate(10); 
+        $news = News::paginate(10);
         return view('admin.listNews', compact('news'));
     }
 
     public function storeNews(Request $request)
     {
-        $validatedData = $request->validate([
+        $request->validate([
             'title' => 'required|max:255',
-            'description' => 'required',
+            'content' => 'required',
             'image' => 'nullable|image',
-            'date' => 'required|date',
         ]);
 
         $path = null;
@@ -147,9 +156,8 @@ class AdminController extends Controller
 
         News::create([
             'title' => $request->title,
-            'description' => $request->description,
+            'content' => $request->content,
             'image' => $path ? '/storage/' . $path : null,
-            'date' => $request->date,
         ]);
 
         return redirect()->route('admin.dashboard')->with('success', 'News created successfully!');
@@ -157,42 +165,44 @@ class AdminController extends Controller
 
     public function editNews($id)
     {
-    $news = News::findOrFail($id);
-    return view('admin.editNews', compact('news'));
+        $news = News::findOrFail($id);
+        return view('admin.editNews', compact('news'));
     }
 
     public function updateNews(Request $request, $id)
     {
-    $request->validate([
-        'title' => 'required|max:255',
-        'description' => 'required',
-        'image' => 'nullable|image',
-        'date' => 'required|date',
-    ]);
-    
-    $news = News::findOrFail($id);
+        $request->validate([
+            'title' => 'required|max:255',
+            'content' => 'required',
+            'image' => 'nullable|image',
+        ]);
 
-    $path = $news->image;
-    if ($request->hasFile('image') && $request->file('image')->isValid()) {
-        $file = $request->file('image');
-        $path = $file->store('images');
-    }
+        $news = News::findOrFail($id);
 
-    $news->update([
-        'title' => $request->title,
-        'description' => $request->description,
-        'image' => $path ? '/storage/' . $path : $news->image,
-        'date' => $request->date,
-    ]);
+        $path = $news->image;
+        $image = substr($path, 8);
+        if ($request->hasFile('image') && $request->file('image')->isValid()) {
+            $file = $request->file('image');
+            Storage::delete($image);
+            $path = $file->store('images');
+        }
 
-    return redirect()->route('admin.listNews')->with('success', 'News updated successfully!');
+        $news->update([
+            'title' => $request->title,
+            'content' => $request->content,
+            'image' => $path ? '/storage/' . $path : $news->image,
+        ]);
+
+        return redirect()->route('admin.listNews')->with('success', 'News updated successfully!');
     }
 
     public function deleteNews($id)
     {
-    $news = News::findOrFail($id);
-    $news->delete();
-    return redirect()->route('admin.listNews')->with('success', 'News deleted successfully!');
+        $news = News::findOrFail($id);
+        $image = substr($news->image, 8);
+        Storage::delete($image);
+        $news->delete();
+        return redirect()->route('admin.listNews')->with('success', 'News deleted successfully!');
     }
 
     public function createMateri()
@@ -205,5 +215,134 @@ class AdminController extends Controller
         return view('admin.createPelatihan');
     }
 
-    
+    public function listAbsensi(Request $request)
+    {
+        $selectedDate = $request->input('selected_date', now()->toDateString());
+        $attendances = Attendance::paginate(10);
+        return view('admin.listAbsensi', compact('selectedDate', 'attendances'));
+    }
+
+    public function storePelatihan(Request $request)
+    {
+        $path = null;
+        $path_file = null;
+
+        if ($request->has('materials')) {
+            foreach ($request->materials as $key => $material) {
+                if (isset($material['sub_materials'])) {
+                    foreach ($material['sub_materials'] as $index => $sub_material) {
+                        Validator::make($request->all(), [
+                            'name' => 'required',
+                            'description' => 'required',
+                            'type' => 'required',
+                            'image' => 'required',
+                            'materials.*.title' => 'required',
+                            'materials.*.description' => 'required',
+                            'materials.*.sub_materials.*.title' => 'required',
+                            'materials.*.sub_materials.*.content' => 'required',
+                            'materials.*.sub_materials.*.file' => 'nullable|image|mimes:pdf,jpg,png,mp4',
+                        ])->validate();
+                    }
+                } else {
+                    Validator::make($request->all(), [
+                        'materials[][sub_materials][][]' => 'required',
+                    ])->validate();
+                }
+            }
+        } else {
+            Validator::make($request->all(), [
+                'materials[][]' => 'required',
+            ])->validate();
+        }
+
+        try {
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                $file = $request->file('image');
+                $path = $file->store('images');
+            }
+
+            $workshop = Workshop::create([
+                'name' => $request->name,
+                'description' => $request->description,
+                'type' => $request->type,
+                'image' => $path ? '/storage/' . $path : null,
+            ]);
+
+            foreach ($request->materials as $material) {
+                $topic = Topics::create([
+                    'title' => $material['title'],
+                    'description' => $material['description'],
+                    'workshop_id' => $workshop->id,
+                ]);
+                if (isset($material['sub_materials'])) {
+                    foreach ($material['sub_materials'] as $sub_material) {
+                        if ($sub_material['file']) {
+                            $path_file = $sub_material['file']->store('images');
+                        }
+                        Subtopics::create([
+                            'topic_id' => $topic->id,
+                            'title' => $sub_material['title'],
+                            'content' => $sub_material['content'],
+                            'file' => $path_file ? '/storage/' . $path_file : null,
+                        ]);
+                    }
+                }
+            }
+
+            session()->forget('materials');
+            return redirect()->back()->with('success', 'Pelatihan berhasil ditambah');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function addMaterial(Request $request)
+    {
+        $materials = session('materials', []);
+        $materials[] = [];
+        session(['materials' => $materials]);
+
+        return redirect()->back();
+    }
+
+    public function addSubMaterial(Request $request, $materialIndex)
+    {
+        $materials = session('materials', []);
+        if (!isset($materials[$materialIndex]['sub_materials'])) {
+            $materials[$materialIndex]['sub_materials'] = [];
+        }
+        $materials[$materialIndex]['sub_materials'][] = [];
+        session(['materials' => $materials]);
+
+        return redirect()->back();
+    }
+
+    public function removeMaterial(Request $request, $index)
+    {
+        $materials = session('materials', []);
+        if (isset($materials[$index])) {
+            unset($materials[$index]);
+            $materials = array_values($materials); // Reindex array
+        }
+        session(['materials' => $materials]);
+
+        return redirect()->back();
+    }
+
+    public function removeSubMaterial(Request $request, $materialIndex, $subIndex)
+    {
+        $materials = session('materials', []);
+        if (isset($materials[$materialIndex]['sub_materials'][$subIndex])) {
+            unset($materials[$materialIndex]['sub_materials'][$subIndex]);
+            $materials[$materialIndex]['sub_materials'] = array_values($materials[$materialIndex]['sub_materials']);
+        }
+        session(['materials' => $materials]);
+
+        return redirect()->back();
+    }
+
+    public function listWorkshop(){
+        $workshops = Workshop::with('topics.subtopics')->paginate(10);
+        return view('admin.listWorkshop', compact('workshops'));
+    }
 }

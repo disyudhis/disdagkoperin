@@ -1,0 +1,227 @@
+/* Gaya untuk Sidebar */
+body {
+    font-family: "Poppins", sans-serif; /* Menggunakan font Poppins */
+}
+
+#sidebar-wrapper {
+    min-width: 250px;
+    max-width: 250px;
+    background-color: #430bdf; /* Warna biru baru */
+    transition: transform 0.3s ease; /* Transisi saat sidebar muncul */
+    height: 100vh; /* Memastikan sidebar memenuhi tinggi layar */
+    position: fixed; /* Mengatur posisi sidebar menjadi fixed */
+    z-index: 1000; /* Memastikan sidebar berada di atas konten */
+    left: 0; /* Menempatkan sidebar di sisi kiri */
+    top: 0; /* Menempatkan sidebar di atas */
+    transform: translateX(0); /* Menampilkan sidebar secara default */
+}
+
+#sidebar-wrapper.show {
+    transform: translateX(0); /* Menampilkan sidebar */
+}
+
+#sidebar-wrapper .list-group-item {
+    border: none; /* Menghilangkan border */
+    color: white; /* Warna teks item menu */
+    background-color: #430bdf; /* Warna latar belakang yang sama dengan sidebar */
+}
+
+#sidebar-wrapper .list-group-item:hover {
+    background-color: #2e08a6; /* Warna lebih gelap saat hover */
+}
+
+/* Gaya untuk elemen yang ter-collapse */
+#sidebar-wrapper .collapse {
+    background-color: #430bdf; /* Warna latar belakang yang sama dengan sidebar */
+}
+
+/* Gaya untuk item dalam collapse */
+#sidebar-wrapper .collapse .list-group-item {
+    padding-left: 30px; /* Menambahkan padding kiri untuk indentasi */
+    background-color: transparent; /* Menghilangkan latar belakang agar sesuai dengan sidebar */
+}
+
+/* Gaya untuk Konten */
+#page-content-wrapper {
+    margin-left: 250px; /* Memberikan margin kiri untuk konten agar tidak bertumpuk dengan sidebar */
+    padding: 20px;
+    height: 100vh; /* Memastikan konten memenuhi tinggi layar */
+    overflow-y: auto; /* Menambahkan scroll jika konten melebihi tinggi layar */
+    transition: margin-left 0.3s ease; /* Transisi saat sidebar muncul */
+}
+
+/* Gaya untuk konten saat sidebar ditampilkan */
+#page-content-wrapper.sidebar-open {
+    margin-left: 250px; /* Memberikan margin kiri saat sidebar terbuka */
+}
+
+h1,
+h2 {
+    color: #333; /* Warna teks untuk judul */
+}
+
+/* Gaya untuk Kartu */
+.card {
+    border: 1px solid #e0e0e0; /* Border abu-abu untuk kartu */
+    border-radius: 8px; /* Sudut melengkung */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); /* Bayangan halus untuk kartu */
+}
+
+/* Gaya untuk Ikon */
+.list-group-item i {
+    margin-right: 8px; /* Jarak antara ikon dan teks */
+}
+
+/* Responsif */
+@media (max-width: 768px) {
+    #sidebar-wrapper {
+        min-width: 100%; /* Mengatur lebar sidebar menjadi 100% pada perangkat kecil */
+        max-width: 100%; /* Mengatur lebar sidebar menjadi 100% pada perangkat kecil */
+        transform: translateX(-100%); /* Menyembunyikan sidebar di luar layar */
+    }
+
+    #page-content-wrapper {
+        margin-left: 0; /* Mengatur margin kiri konten menjadi 0 pada perangkat kecil */
+    }
+}
+
+/* Gaya untuk konten saat sidebar disembunyikan */
+#sidebar-wrapper.toggled {
+    display: none; /* Menyembunyikan sidebar */
+}
+
+#page-content-wrapper.toggled {
+    width: 100%; /* Mengatur lebar konten menjadi 100% saat sidebar disembunyikan */
+}
+
+/* Gaya untuk item menu yang aktif */
+#sidebar-wrapper .list-group-item.active {
+    background-color: #2e08a6; /* Warna latar belakang saat item aktif */
+    color: white; /* Warna teks saat item aktif */
+}
+
+/* Gaya untuk tombol close */
+#sidebarClose {
+    border: none; /* Menghilangkan border */
+    background: none; /* Menghilangkan latar belakang */
+    color: white; /* Warna tombol */
+    font-size: 1.5rem; /* Ukuran font */
+    cursor: pointer; /* Menunjukkan bahwa ini adalah tombol */
+    transition: color 0.3s ease; /* Transisi warna saat hover */
+}
+
+#sidebarClose:hover {
+    color: #ffcc00; /* Warna saat hover */
+}
+
+/* Menyembunyikan tombol hamburger pada desktop */
+@media (min-width: 768px) {
+    #sidebarToggle {
+        display: none; /* Menyembunyikan tombol hamburger pada tampilan desktop */
+    }
+}
+
+/* Gaya untuk logo */
+.sidebar-heading img {
+    border-radius: 5px; /* Sudut melengkung untuk logo */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan halus untuk logo */
+}
+
+/* Gaya untuk kontainer profil */
+.profile-container {
+    text-align: center; /* Menyelaraskan teks di tengah */
+    margin-top: 20px; /* Jarak atas untuk kontainer profil */
+}
+
+/* Gaya untuk gambar profil */
+.profile-picture {
+    width: 100px; /* Lebar gambar profil */
+    height: 100px; /* Tinggi gambar profil */
+    border-radius: 50%; /* Membuat gambar profil menjadi bulat */
+    object-fit: cover; /* Memastikan gambar tidak terdistorsi */
+    border: 2px solid white; /* Border putih di sekitar gambar */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); /* Bayangan halus untuk gambar profil */
+}
+
+/* Gaya untuk nama pengguna */
+.username {
+    margin-top: 10px; /* Jarak atas untuk nama pengguna */
+    font-size: 1rem; /* Ukuran font untuk nama pengguna */
+    color: white; /* Warna teks untuk nama pengguna */
+}
+
+/* Gaya untuk konten dashboard */
+#page-content-wrapper h1 {
+    font-size: 1.5rem; /* Ukuran font untuk judul utama */
+}
+
+#page-content-wrapper h2 {
+    font-size: 1.25rem; /* Ukuran font untuk sub-judul */
+}
+
+#page-content-wrapper p.lead {
+    font-size: 1rem; /* Ukuran font untuk paragraf lead */
+}
+
+.card-title {
+    font-size: 1rem; /* Ukuran font untuk judul kartu */
+}
+
+.card-body h3 {
+    font-size: 1.5rem; /* Ukuran font untuk angka dalam kartu */
+}
+
+/* Gaya untuk Quick Actions */
+#page-content-wrapper .btn {
+    font-size: 1rem; /* Ukuran font untuk tombol */
+    padding: 10px; /* Padding untuk tombol */
+    border-radius: 5px; /* Sudut melengkung untuk tombol */
+    transition: background-color 0.3s ease; /* Transisi warna latar belakang saat hover */
+}
+
+#page-content-wrapper .btn:hover {
+    opacity: 0.9; /* Efek saat hover */
+}
+
+/* Gaya untuk judul Quick Actions */
+#page-content-wrapper h2 {
+    font-size: 1.5rem; /* Ukuran font untuk judul Quick Actions */
+    color: #333; /* Warna teks untuk judul */
+}
+
+@media (max-width: 768px) {
+    .table-responsive {
+        font-size: 0.9rem;
+    }
+
+    .btn-sm {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+
+    .card-body {
+        padding: 15px;
+    }
+
+    .existing-image-preview img {
+        max-height: 200px;
+    }
+}
+
+.image-upload-container {
+    position: relative;
+    border: 2px dashed #dee2e6;
+    border-radius: 0.375rem;
+    padding: 15px;
+    transition: border-color 0.3s ease;
+}
+
+.image-upload-container:hover {
+    border-color: #007bff;
+}
+
+.existing-image-preview img {
+    max-height: 250px;
+    width: 100%;
+    object-fit: cover;
+}

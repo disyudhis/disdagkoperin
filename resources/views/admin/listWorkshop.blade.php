@@ -44,6 +44,7 @@
                                         <th class="text-nowrap">Topics</th>
                                         <th class="text-nowrap">Subtopics</th>
                                         <th class="text-nowrap">Tanggal Dibuat</th>
+                                        <th class="text-nowrap">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody>
@@ -74,10 +75,22 @@
                                             </td>
                                             <td class="text-nowrap">{{ $item->created_at->translatedFormat('d F Y') }}
                                             </td>
+                                            <td class="text-nowrap">
+                                                <div class="d-flex gap-2">
+                                                    <a href="{{ route('admin.editWorkshop', $item->id) }}"
+                                                        class="btn btn-warning btn-sm">Edit</a>
+
+                                                    <button type="button" class="btn btn-danger btn-sm"
+                                                        data-bs-toggle="modal"
+                                                        data-bs-target="#deleteModal{{ $item->id }}">
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            </td>
                                         </tr>
 
                                         <!-- Modal Konfirmasi Hapus -->
-                                        {{-- <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
+                                        <div class="modal fade" id="deleteModal{{ $item->id }}" tabindex="-1"
                                             aria-labelledby="deleteModalLabel{{ $item->id }}" aria-hidden="true">
                                             <div class="modal-dialog">
                                                 <div class="modal-content">
@@ -104,7 +117,7 @@
                                                     </div>
                                                 </div>
                                             </div>
-                                        </div> --}}
+                                        </div>
                                     @empty
                                         <td colspan="12" class="text-center">
                                             Belum ada pelatihan

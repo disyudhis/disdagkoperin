@@ -56,6 +56,7 @@ Route::middleware([Authenticate::class])->group(function () {
             Route::post('/pelatihan', [AdminController::class, 'storePelatihan'])->name('admin.storePelatihan');
             Route::get('/pelatihan/add-material', [AdminController::class, 'addMaterial'])->name('admin.createMaterial');
             Route::get('/pelatihan/remove-material/{index}', [AdminController::class, 'removeMaterial'])->name('admin.removeMaterial');
+            Route::get('/workshop/{index}/edit', [AdminController::class, 'editWorkshop'])->name('admin.editWorkshop');
             Route::get('/pelatihan/add-sub-material/{index}', [AdminController::class, 'addSubMaterial'])->name('admin.addSubMaterial');
             Route::get('/pelatihan/remove-sub-material/{index}/{subIndex}', [AdminController::class, 'removeSubMaterial'])->name('admin.removeSubMaterial');
             Route::get('/materi/create', [AdminController::class, 'createMateri'])->name('admin.createMateri');

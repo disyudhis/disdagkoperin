@@ -36,7 +36,7 @@
             </a>
         </div>
         <a href="#listDataMenu" data-bs-toggle="collapse"
-            class="list-group-item list-group-item-action text-white {{ request()->routeIs('admin.listNews') || request()->routeIs('admin.listAnnouncements') || request()->routeIs('admin.listAbsensi') ? 'active' : '' }}">
+            class="list-group-item list-group-item-action text-white {{ request()->routeIs('admin.listNews') || request()->routeIs('admin.listAnnouncements') || request()->routeIs('admin.listAbsensi') || request()->routeIs('admin.listWorkshop') ? 'active' : '' }}">
             <i class="bi bi-list-ul"></i> List Data
         </a>
         <div class="collapse" id="listDataMenu">

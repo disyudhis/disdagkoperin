@@ -228,7 +228,6 @@ class AdminController extends Controller
 
     public function storePelatihan(Request $request)
     {
-        // dd($request->all());
         $path = null;
         $path_file = null;
 
@@ -301,6 +300,37 @@ class AdminController extends Controller
         }
     }
 
+    public function editWorkshop($id)
+    {
+        $pelatihan = Workshop::with(['topics.subtopics'])->findOrFail($id);
+        // dd($pelatihan);
+
+        $materials = $pelatihan->topics
+            ->map(function ($topic) {
+                return [
+                    'title' => $topic->title,
+                    'description' => $topic->description,
+                    'sub_materials' => $topic->subtopics
+                        ->map(function ($sub) {
+                            return [
+                                'title' => $sub->title,
+                                'content' => $sub->content,
+                                'file' => $sub->file_path,
+                            ];
+                        })
+                        ->toArray(),
+                ];
+            })
+            ->toArray();
+
+            // dd($materials);
+
+
+        session(['materials' => $materials]);
+        // session(['sub_materials' => ])
+        return view('admin.editWorkshop', compact('pelatihan'));
+    }
+
     public function addMaterial(Request $request)
     {
         $materials = session('materials', []);
@@ -346,7 +376,8 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
-    public function listWorkshop(){
+    public function listWorkshop()
+    {
         $workshops = Workshop::with('topics.subtopics')->paginate(10);
         return view('admin.listWorkshop', compact('workshops'));
     }

@@ -22,14 +22,15 @@ Route::middleware([Authenticate::class])->group(function () {
     Route::get('/berita', [PublicController::class, 'news'])->name('berita');
     Route::get('/berita/{id}', [PublicController::class, 'newsDetail'])->name('berita.detail');
     Route::get('/kontak', [PublicController::class, 'contact'])->name('kontak');
+    Route::post('/send-email', [PublicController::class, 'sendEmail'])->name('sendEmail');
     Route::post('/logout', [PublicController::class, 'logout'])->name('logout');
-    Route::middleware([AdminMiddleware::class])->group(function () {
-        Route::prefix('/admin')->group(function () {
-            Route::get('/berita', [BeritaController::class, 'index'])->name('admin.berita');
-            Route::get('/berita/create', [BeritaController::class, 'create'])->name('admin.berita.create');
-            Route::post('/berita', [BeritaController::class, 'store'])->name('admin.berita.store');
-            Route::delete('/berita/{id}', [BeritaController::class, 'destroy'])->name('admin.berita.destroy');
-        });
+});
+Route::middleware([AdminMiddleware::class])->group(function () {
+    Route::prefix('/admin')->group(function () {
+        Route::get('/berita', [BeritaController::class, 'index'])->name('admin.berita');
+        Route::get('/berita/create', [BeritaController::class, 'create'])->name('admin.berita.create');
+        Route::post('/berita', [BeritaController::class, 'store'])->name('admin.berita.store');
+        Route::delete('/berita/{id}', [BeritaController::class, 'destroy'])->name('admin.berita.destroy');
     });
 });
 

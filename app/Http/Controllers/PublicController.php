@@ -4,9 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Models\News;
 use App\Models\User;
+use App\Mail\SendEmail;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
+use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 
 class PublicController extends Controller
@@ -112,6 +114,32 @@ class PublicController extends Controller
     public function contact()
     {
         return view('kontak');
+    }
+
+    public function sendEmail(Request $request)
+    {
+        $request->validate([
+            'nama' => 'required',
+            'nik' => 'required',
+            'phone' => 'required',
+            'email' => 'required',
+            'pesan' => 'required',
+        ]);
+
+        $data = [
+            'nama' => $request->nama,
+            'nik' => $request->nib,
+            'phone' => $request->phone,
+            'email' => $request->email,
+            'pesan' => $request->pesan,
+        ];
+
+        try {
+            Mail::to('feralpickle03@gmail.com')->send(new SendEmail($data));
+            return redirect()->back()->with('success', 'Email berhasil dikirim');
+        } catch (\Exception $e) {
+            return redirect()->back()->with('error', $e->getMessage());
+        }
     }
 
     public function logout(Request $request)

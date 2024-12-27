@@ -19,3 +19,85 @@
 .text-warning {
     color: #f97316 !important;
 }
+
+.form-control:focus {
+    border-color: #f97316;
+    box-shadow: 0 0 0 0.25rem rgba(249, 115, 22, 0.25);
+}
+
+.btn:hover {
+    background-color: #ea580c !important;
+}
+
+.sidebar {
+    width: 280px;
+    height: 100vh;
+    position: fixed;
+    background: #212529;
+    z-index: 1050;
+}
+
+.main-content {
+    margin-left: 280px;
+    transition: margin 0.3s;
+}
+
+.toggle-sidebar {
+    display: none;
+    position: fixed;
+    left: 1rem;
+    top: 1rem;
+    z-index: 1060;
+}
+
+@media (max-width: 768px) {
+    .sidebar {
+        left: -280px;
+        transition: left 0.3s;
+    }
+
+    .sidebar.active {
+        left: 0;
+    }
+
+    .main-content {
+        margin-left: 0;
+    }
+
+    .toggle-sidebar {
+        display: block;
+    }
+
+    .backdrop {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.5);
+        z-index: 1040;
+    }
+
+    .backdrop.show {
+        display: block;
+    }
+}
+
+.list-group-item {
+    background-color: transparent;
+    border: none;
+    color: rgba(255,255,255,.8);
+    padding: 0.75rem 1rem;
+    border-radius: 6px;
+}
+
+.list-group-item:hover,
+.list-group-item.active {
+    background-color: rgba(255,255,255,.1);
+    color: white;
+}
+
+.object-fit-cover {
+    object-fit: cover;
+}

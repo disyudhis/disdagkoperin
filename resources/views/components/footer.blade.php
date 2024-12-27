@@ -1,26 +1,28 @@
-<footer class="bg-gray-800 text-white py-8">
-    <div class="container mx-auto px-4">
-        <!-- Grid untuk konten utama -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div class="text-center md:text-left">
-                <h3 class="font-bold text-lg mb-3">Alamat Kantor</h3>
-                <p class="text-gray-300">Lorem Ipsum Dolor Sit Amet</p>
+<footer class="bg-dark text-white py-5">
+    <div class="container">
+        <div class="row g-4">
+            <!-- Alamat -->
+            <div class="col-md-4 text-center text-md-start">
+                <h3 class="h5 fw-bold mb-3">Alamat Kantor</h3>
+                <p class="text-secondary">Lorem Ipsum Dolor Sit Amet</p>
             </div>
 
-            <div class="text-center md:text-left">
-                <h3 class="font-bold text-lg mb-3">Alamat Email</h3>
-                <p class="text-gray-300">Lorem Ipsum Dolor Sit Amet</p>
+            <!-- Email -->
+            <div class="col-md-4 text-center text-md-start">
+                <h3 class="h5 fw-bold mb-3">Alamat Email</h3>
+                <p class="text-secondary">Lorem Ipsum Dolor Sit Amet</p>
             </div>
 
-            <div class="text-center md:text-left">
-                <h3 class="font-bold text-lg mb-3">Telepon</h3>
-                <p class="text-gray-300">Lorem Ipsum Dolor Sit Amet</p>
+            <!-- Telepon -->
+            <div class="col-md-4 text-center text-md-start">
+                <h3 class="h5 fw-bold mb-3">Telepon</h3>
+                <p class="text-secondary">Lorem Ipsum Dolor Sit Amet</p>
             </div>
         </div>
 
         <!-- Copyright -->
-        <div class="text-center mt-8 pt-6 border-t border-gray-700 text-gray-400 text-sm">
-            &copy; 2024 - Company, Inc. All rights reserved. Address Address
+        <div class="text-center mt-4 pt-4 border-top border-secondary">
+            <small class="text-secondary">&copy; 2024 - Company, Inc. All rights reserved. Address Address</small>
         </div>
     </div>
 </footer>

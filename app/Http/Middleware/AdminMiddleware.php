@@ -27,6 +27,6 @@ class AdminMiddleware
                 return redirect()->route('admin.login');
             }
         }
-        return abort(403);
+        return redirect()->route('admin.login');
     }
 }

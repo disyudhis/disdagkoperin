@@ -210,7 +210,7 @@
                                                             @enderror"
                                                                 name="materials[{{ $materialIndex }}][sub_materials][{{ $subIndex }}][content]" rows="2">{{ $subMaterial['content'] ?? '' }}</textarea>
                                                             @error('materials.' . $materialIndex . '.sub_materials.' .
-                                                                $subIndex . '.title')
+                                                                $subIndex . '.content')
                                                                 <div class="invalid-feedback">
                                                                     Isi konten harus diisi
                                                                 </div>
@@ -225,9 +225,9 @@
                                                             @enderror"
                                                                 name="materials[{{ $materialIndex }}][sub_materials][{{ $subIndex }}][file]">
                                                             @error('materials.' . $materialIndex . '.sub_materials.' .
-                                                                $subIndex . '.title')
+                                                                $subIndex . '.file')
                                                                 <div class="invalid-feedback">
-                                                                    File harus diisi
+                                                                    {{ $message }}
                                                                 </div>
                                                             @enderror
                                                         </div>

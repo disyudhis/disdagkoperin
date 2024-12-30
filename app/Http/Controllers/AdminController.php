@@ -2,12 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\Absensi;
 use Carbon\Carbon;
-use Validator;
 use App\Models\News;
+use App\Models\User;
 use App\Models\Admin;
 use App\Models\Topics;
+use App\Models\Absensi;
 use App\Models\Workshop;
 use App\Models\Subtopics;
 use App\Models\Attendance;
@@ -17,6 +17,7 @@ use GuzzleHttp\Psr7\UploadedFile;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Validator;
 
 class AdminController extends Controller
 {
@@ -44,8 +45,10 @@ class AdminController extends Controller
     {
         $announcementCount = Announcement::count();
         $newsCount = News::count();
-
-        return view('admin.dashboard', compact('announcementCount', 'newsCount'));
+        $workshopCount = Workshop::count();
+        $materiCount = Topics::count();
+        $attendanceCount = User::where('is_enrolled', true)->count();
+        return view('admin.dashboard', compact('announcementCount', 'newsCount', 'workshopCount', 'materiCount', 'attendanceCount'));
     }
 
     public function logout(Request $request)
@@ -228,6 +231,7 @@ class AdminController extends Controller
 
     public function storePelatihan(Request $request)
     {
+
         $path = null;
         $path_file = null;
 
@@ -239,12 +243,12 @@ class AdminController extends Controller
                             'name' => 'required',
                             'description' => 'required',
                             'type' => 'required',
-                            'image' => 'required',
+                            'image' => 'required|mimes:jpg,png|max:2048',
                             'materials.*.title' => 'required',
                             'materials.*.description' => 'required',
                             'materials.*.sub_materials.*.title' => 'required',
                             'materials.*.sub_materials.*.content' => 'required',
-                            'materials.*.sub_materials.*.file' => 'nullable|image|mimes:pdf,jpg,png,mp4',
+                            'materials.*.sub_materials.*.file' => 'nullable|mimes:pdf,jpg,png,mp4,mov|max:10240',
                         ])->validate();
                     }
                 } else {
@@ -294,7 +298,7 @@ class AdminController extends Controller
             }
 
             session()->forget('materials');
-            return redirect()->back()->with('success', 'Pelatihan berhasil ditambah');
+            return redirect()->route('admin.listWorkshop')->with('success', 'Pelatihan berhasil ditambah');
         } catch (\Exception $e) {
             return redirect()->back()->with('error', $e->getMessage());
         }
@@ -302,33 +306,9 @@ class AdminController extends Controller
 
     public function editWorkshop($id)
     {
-        $pelatihan = Workshop::with(['topics.subtopics'])->findOrFail($id);
-        // dd($pelatihan);
+        $workshop = Workshop::with(['topics.subtopics'])->findOrFail($id);
 
-        $materials = $pelatihan->topics
-            ->map(function ($topic) {
-                return [
-                    'title' => $topic->title,
-                    'description' => $topic->description,
-                    'sub_materials' => $topic->subtopics
-                        ->map(function ($sub) {
-                            return [
-                                'title' => $sub->title,
-                                'content' => $sub->content,
-                                'file' => $sub->file_path,
-                            ];
-                        })
-                        ->toArray(),
-                ];
-            })
-            ->toArray();
-
-            // dd($materials);
-
-
-        session(['materials' => $materials]);
-        // session(['sub_materials' => ])
-        return view('admin.editWorkshop', compact('pelatihan'));
+        return view('admin.editWorkshop', compact('workshop'));
     }
 
     public function addMaterial(Request $request)
@@ -380,5 +360,169 @@ class AdminController extends Controller
     {
         $workshops = Workshop::with('topics.subtopics')->paginate(10);
         return view('admin.listWorkshop', compact('workshops'));
+    }
+
+    public function updateWorkshop(Request $request, $id)
+    {
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'description' => 'required|string',
+            'type' => 'required|in:Wajib,Workshop',
+            'image' => 'nullable|image|mimes:jpeg,png,jpg|max:2048',
+            'topics.*.title' => 'required|string|max:255',
+            'topics.*.description' => 'required|string',
+            'topics.*.subtopics.*.title' => 'required|string|max:255',
+            'topics.*.subtopics.*.content' => 'required|string',
+            'topics.*.subtopics.*.file' => 'nullable|file|max:10240',
+        ]);
+
+        try {
+            DB::beginTransaction();
+            $workshop = Workshop::findOrFail($id);
+
+            // Handle image upload
+            $path = null;
+            $image = substr($workshop->image, 8);
+            if ($request->hasFile('image') && $request->file('image')->isValid()) {
+                $file = $request->file('image');
+                Storage::delete($image);
+                $path = $file->store('images');
+            }
+
+            $workshop->update([
+                'name' => $request->name,
+                'description' => $request->description,
+                'type' => $request->type,
+                'image' => $path ? '/storage/' . $path : $workshop->image,
+            ]);
+
+            $existingTopicIds = $workshop->topics->pluck('id')->toArray();
+            $updatedTopicIds = [];
+
+            foreach ($request->topics as $topicData) {
+                $topicId = $topicData['id'] ?? null;
+
+                $topic = $topicId ? Topics::find($topicId) : new Topics();
+
+                if (!$topic) {
+                    $topic = new Topics();
+                }
+
+                $topic->workshop_id = $workshop->id;
+                $topic->title = $topicData['title'];
+                $topic->description = $topicData['description'];
+                $topic->save();
+
+                $updatedTopicIds[] = $topic->id;
+
+                $existingSubtopicIds = $topic->subtopics->pluck('id')->toArray();
+                $updatedSubtopicIds = [];
+
+                // Update or create subtopics
+                if (isset($topicData['subtopics'])) {
+                    foreach ($topicData['subtopics'] as $subtopicData) {
+                        $subtopicId = $subtopicData['id'] ?? null;
+
+                        $subtopic = $subtopicId ? Subtopics::find($subtopicId) : new Subtopics();
+
+                        if (!$subtopic) {
+                            $subtopic = new Subtopics();
+                        }
+
+                        $path_file = null;
+                        // Handle file upload for subtopic
+                        if (isset($subtopicData['file'])) {
+                            if ($subtopic->file) {
+                                $subtopic_file = substr($subtopic->file, 8);
+                                Storage::delete($subtopic_file);
+                            }
+                            $path_file = $subtopicData['file']->store('images');
+                        }
+
+                        $subtopic->topic_id = $topic->id;
+                        $subtopic->title = $subtopicData['title'];
+                        $subtopic->content = $subtopicData['content'];
+                        $subtopic->file = $path_file ? '/storage/' . $path_file : $subtopic->file ?? null;
+                        $subtopic->save();
+                        $updatedSubtopicIds[] = $subtopic->id;
+                    }
+                }
+
+                // Delete removed subtopics
+                $removedSubtopicIds = array_diff($existingSubtopicIds, $updatedSubtopicIds);
+                if (!empty($removedSubtopicIds)) {
+                    $removedSubtopics = Subtopics::whereIn('id', $removedSubtopicIds)->get();
+                    foreach ($removedSubtopics as $removedSubtopic) {
+                        if ($removedSubtopic->file) {
+                            $removed_file = substr($removedSubtopic->file, 8);
+                            Storage::delete($removed_file);
+                        }
+                        $removedSubtopic->delete();
+                    }
+                }
+            }
+
+            // Delete removed topics
+            $removedTopicIds = array_diff($existingTopicIds, $updatedTopicIds);
+            if (!empty($removedTopicIds)) {
+                Topics::whereIn('id', $removedTopicIds)->delete();
+            }
+
+            DB::commit();
+
+            return redirect()->back()->with('success', 'Berhasil mengubah workshop!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()->back()->with('error', $e->getMessage());
+        }
+    }
+
+    public function deleteWorkshop($id)
+    {
+        DB::beginTransaction();
+        try {
+            $workshop = Workshop::with(['topics.subtopics'])->findOrFail($id);
+
+            // Delete workshop image if exists
+            if ($workshop->image) {
+                $image = substr($workshop->image, 8);
+                Storage::delete($image);
+            }
+
+            // Delete all subtopic files
+            foreach ($workshop->topics as $topic) {
+                foreach ($topic->subtopics as $subtopic) {
+                    $subtopic_file = substr($subtopic->file, 8);
+                    if ($subtopic->file) {
+                        Storage::delete($subtopic_file);
+                    }
+                    $subtopic->delete();
+                }
+                $topic->delete();
+            }
+
+            // Delete all attendances related to this workshop
+            $workshop->attendances()->delete();
+
+            // Delete the workshop
+            $workshop->delete();
+
+            // Check if authenticated user still has any attendance
+            $usersWithoutAttendances = DB::table('users')
+            ->whereNotExists(function ($query) {
+                $query->select(DB::raw(1))
+                      ->from('attendance')
+                      ->whereRaw('attendance.user_id = users.id');
+            })
+            ->update(['is_enrolled' => false]);
+
+            DB::commit();
+            return redirect()->back()->with('success', 'Pelatihan berhasil dihapus');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            return redirect()
+                ->back()
+                ->with('error', 'Gagal menghapus pelatihan: ' . $e->getMessage());
+        }
     }
 }

@@ -171,6 +171,16 @@ h2 {
     font-size: 1.5rem; /* Ukuran font untuk angka dalam kartu */
 }
 
+.card {
+    transition: all 0.3s ease;
+}
+.card:hover {
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+}
+.border-start.border-primary {
+    border-left-width: 4px !important;
+}
+
 /* Gaya untuk Quick Actions */
 #page-content-wrapper .btn {
     font-size: 1rem; /* Ukuran font untuk tombol */

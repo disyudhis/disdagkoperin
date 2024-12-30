@@ -28,6 +28,13 @@
                     </div>
                 @endif
 
+                @if (session('error'))
+                    <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                        {{ session('error') }}
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                    </div>
+                @endif
+
                 <div class="card">
                     <div class="card-header">
                         <h5 class="mb-0">Daftar Workshop</h5>
@@ -97,21 +104,20 @@
                                                     <div class="modal-header">
                                                         <h5 class="modal-title"
                                                             id="deleteModalLabel{{ $item->id }}">Konfirmasi
-                                                            Hapus Iklan</h5>
+                                                            Hapus Pelatihan</h5>
                                                         <button type="button" class="btn-close" data-bs-dismiss="modal"
                                                             aria-label="Close"></button>
                                                     </div>
                                                     <div class="modal-body">
-                                                        Apakah Anda yakin ingin menghapus iklan
-                                                        "{{ $item->title }}"?
+                                                        Apakah Anda yakin ingin menghapus Pelatihan
+                                                        "{{ $item->name }}"?
                                                     </div>
                                                     <div class="modal-footer">
                                                         <button type="button" class="btn btn-secondary"
                                                             data-bs-dismiss="modal">Batal</button>
-                                                        <form action="{{ route('admin.deleteNews', $item->id) }}"
+                                                        <form action="{{ route('admin.deleteWorkshop', $item->id) }}"
                                                             method="POST" style="display:inline;">
                                                             @csrf
-                                                            @method('DELETE')
                                                             <button type="submit" class="btn btn-danger">Hapus</button>
                                                         </form>
                                                     </div>

@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
     <link rel="stylesheet" href="{{ asset('wub/styles/admin.css') }}">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.5.0/font/bootstrap-icons.css">
     {{-- <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet"> --}}
     <title>Admin - Dashboard</title>
 </head>
@@ -35,7 +35,7 @@
                 </p>
                 <h2 class="my-4">Informasi Data</h2>
                 <div class="row g-4">
-                    @foreach (['Data Peserta' => 0, 'Data Pelatihan' => 0, 'Data Pengumuman' => $announcementCount, 'Data Iklan' => $newsCount, 'Data Materi' => 0, 'Data Absensi' => 0] as $title => $count)
+                    @foreach (['Data Peserta' => $attendanceCount, 'Data Pelatihan' => $workshopCount, 'Data Pengumuman' => $announcementCount, 'Data Iklan' => $newsCount, 'Data Materi' => $materiCount] as $title => $count)
                         <div class="col-6 col-md-3">
                             <div class="card shadow-sm">
                                 <div class="card-body d-flex flex-column">

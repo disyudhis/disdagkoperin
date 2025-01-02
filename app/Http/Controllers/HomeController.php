@@ -15,4 +15,9 @@ class HomeController extends Controller
     {
         return view('wub.informasi');
     }
+
+    public function syaratKetentuan()
+    {
+        return view('wub.sk');
+    }
 }

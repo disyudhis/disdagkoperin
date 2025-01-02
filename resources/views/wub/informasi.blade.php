@@ -4,7 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Landing Page - Information</title>
+    <title>WUB - Information</title>
+    <link rel="icon" href="{{ asset('img/about.png') }}">
     <link rel="stylesheet" type="text/css" href="wub/styles/styles.css" />
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,10 +14,78 @@
         rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.2/font/bootstrap-icons.css">
+
+    <style>
+        .info-card {
+            background: white;
+            border-radius: 10px;
+            padding: 2rem;
+            margin-bottom: 2rem;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+
+        .lable-detail {
+            color: #333;
+            font-size: 2rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+            position: relative;
+            padding-bottom: 10px;
+        }
+
+        .lable-detail:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 60px;
+            height: 3px;
+            background: #0d6efd;
+        }
+
+        .description {
+            font-size: 1.1rem;
+            line-height: 1.8;
+            color: #555;
+            text-align: justify;
+            margin-bottom: 1rem;
+        }
+
+        .benefit-card {
+            height: 100%;
+            transition: transform 0.3s ease;
+        }
+
+        .benefit-card:hover {
+            transform: translateY(-5px);
+        }
+
+        .stages-card {
+            background: #f8f9fa;
+            border-radius: 8px;
+            padding: 1.5rem;
+            height: 100%;
+            transition: all 0.3s ease;
+        }
+
+        .stages-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        }
+
+        .stages-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: #0d6efd;
+            margin-bottom: 1rem;
+        }
+    </style>
 </head>
 
 <body>
     {{-- Start Header --}}
+
     <div class="header">
         <div class="logo-container">
             <img src="wub/img/logo.png" alt="Logo" class="logo">
@@ -28,10 +97,19 @@
             <ul class="menu" id="menu">
                 <li class="menu-item"><a href="{{ route('home') }}">Home</a></li>
                 <li class="menu-item"><a href="#information">Information</a></li>
-                <li class="menu-item"><a href="#about">About</a></li>
-                <li class="menu-item">
-                    <button class="login" onclick="location.href='{{ route('tas') }}'">Login</button>
-                </li>
+                @auth
+                    <li class="menu-item"><a href="{{ route('wub.dashboardWub') }}">Dashboard</a></li>
+                    <li class="menu-item" style="color: white">Hai, {{ Auth::user()->name }}</li>
+                    <li class="menu-item">
+                        <button style="border: none; background: none; color: white" onclick="showLogoutModal()">
+                            <i class="bi bi-power"></i>
+                        </button>
+                    </li>
+                @else
+                    <li class="menu-item">
+                        <button class="login" onclick="location.href='{{ route('tas') }}'">Login</button>
+                    </li>
+                @endauth
                 <li class="menu-item close-menu" id="close-menu" style="display: none;">&times;</li>
                 <!-- Tombol close -->
             </ul>
@@ -40,47 +118,55 @@
     {{-- End Header --}}
     <div class="info-section">
         <div class="container">
+            <!-- Program WUB Introduction -->
             <div class="info-card" data-aos="fade-up">
                 <h2 class="lable-detail">Apa itu WUB?</h2>
                 <div class="row">
                     <div class="col-md-6">
                         <p class="description">
-                            Morbi sit amet risus nisl. Fusce ut nunc tortor. Praesent faucibus id ligula id molestie.
-                            Sed ipsum enim, euismod a bibendum non, euismod ut velit.
-                            Maecenas sollicitudin enim non mollis tristique.
+                            Program Wirausaha Baru (WUB) adalah salah satu upaya pemerintah Kota Cimahi khususnya
+                            DOSDAGKOPERIN untuk meningkatkan jumlah wirausaha di daerahnya. Program ini bertujuan untuk
+                            mendukung masyarakat dalam merintis usaha dengan memberikan pembekalan pengetahuan dan
+                            keterampilan yang diperlukan dalam menjalankan bisnis.
                         </p>
                     </div>
                     <div class="col-md-6">
                         <p class="description">
-                            Praesent aliquam, diam sit amet malesuada venenatis, lorem risus congue ante.
-                            Proin augue justo, sodales et mi dignissim, laoreet malesuada neque.
-                            Morbi ante odio, maximus ac urna et, dictum porta nisi.
+                            Melalui program ini, calon wirausaha diberikan pelatihan dan pendampingan, seperti pelatihan
+                            manajemen usaha, pemasaran, dan keterampilan teknis sesuai bidang usaha.
                         </p>
                     </div>
                 </div>
             </div>
 
+            <!-- Program Benefits -->
             <div class="info-card" data-aos="fade-up" data-aos-delay="100">
-                <h2 class="lable-detail">Keuntungan Program WUB</h2>
+                <h2 class="lable-detail">Jenis Usaha WUB</h2>
                 <div class="row">
                     <div class="col-md-12">
                         <div class="row g-4">
-                            <div class="col-md-4">
-                                <div class="p-3 border-start border-4 border-primary">
-                                    <h4>Benefit 1</h4>
-                                    <p class="description">Morbi sit amet risus nisl. Fusce ut nunc tortor.</p>
+                            <div class="col-md-3">
+                                <div class="p-3 border-start border-4 border-primary benefit-card">
+                                    <h4>Kuliner</h4>
+                                    <p class="description">Pengembangan usaha di bidang makanan dan minuman</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="p-3 border-start border-4 border-success">
-                                    <h4>Benefit 2</h4>
-                                    <p class="description">Praesent faucibus id ligula id molestie.</p>
+                            <div class="col-md-3">
+                                <div class="p-3 border-start border-4 border-success benefit-card">
+                                    <h4>Fashion</h4>
+                                    <p class="description">Pengembangan usaha di bidang pakaian dan mode</p>
                                 </div>
                             </div>
-                            <div class="col-md-4">
-                                <div class="p-3 border-start border-4 border-info">
-                                    <h4>Benefit 3</h4>
-                                    <p class="description">Sed ipsum enim, euismod a bibendum non.</p>
+                            <div class="col-md-3">
+                                <div class="p-3 border-start border-4 border-info benefit-card">
+                                    <h4>Kerajinan</h4>
+                                    <p class="description">Pengembangan usaha di bidang kerajinan tangan</p>
+                                </div>
+                            </div>
+                            <div class="col-md-3">
+                                <div class="p-3 border-start border-4 border-warning benefit-card">
+                                    <h4>Jasa</h4>
+                                    <p class="description">Pengembangan usaha di bidang pelayanan jasa</p>
                                 </div>
                             </div>
                         </div>
@@ -88,21 +174,74 @@
                 </div>
             </div>
 
+            <!-- Program Stages -->
             <div class="info-card" data-aos="fade-up" data-aos-delay="200">
-                <h2 class="lable-detail">Fasilitas Program WUB</h2>
+                <h2 class="lable-detail">Tahapan Program WUB</h2>
                 <div class="row g-4">
-                    <div class="col-md-6 col-lg-3">
-                        <div class="text-center p-4 bg-light rounded-3">
-                            <i class="fas fa-laptop mb-3 fs-1 text-primary"></i>
-                            <h5>Online Learning</h5>
-                            <p class="description">Akses pembelajaran kapan saja</p>
+                    <div class="col-md-3">
+                        <div class="stages-card">
+                            <div class="stages-number">01</div>
+                            <h5>Seleksi</h5>
+                            <p class="description">Tahap seleksi bagi para peserta dan pendamping program</p>
                         </div>
                     </div>
-                    <!-- Add more facility cards similarly -->
+                    <div class="col-md-3">
+                        <div class="stages-card">
+                            <div class="stages-number">02</div>
+                            <h5>Bimbingan Teknis</h5>
+                            <p class="description">Tahap bimbingan teknis untuk para pendamping</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stages-card">
+                            <div class="stages-number">03</div>
+                            <h5>Pelaksanaan</h5>
+                            <p class="description">Tahap pelaksanaan kegiatan selama lima bulan</p>
+                        </div>
+                    </div>
+                    <div class="col-md-3">
+                        <div class="stages-card">
+                            <div class="stages-number">04</div>
+                            <h5>Evaluasi</h5>
+                            <p class="description">Tahap evaluasi hasil program</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+
+            <!-- Grading System -->
+            <div class="info-card" data-aos="fade-up" data-aos-delay="300">
+                <h2 class="lable-detail">Sistem Grading</h2>
+                <p class="description">
+                    Dalam setiap jenis usaha terdapat grading sebagai penilaian untuk menentukan kualitas setiap produk
+                    para wirausaha baru, mulai dari grade D sampai dengan A+. Para peserta WUB yang baru memulai usaha
+                    akan ditempatkan pada grade D. Jika setelah mengikuti program ini mereka memenuhi syarat umum dan
+                    syarat khusus, maka akan mendapatkan fasilitas yang diberikan oleh DISDAGKOPERIN sesuai dengan
+                    kelompok jenis usaha mereka, dan eligible untuk melanjutkan pelatihan ke grade selanjutnya.
+                </p>
             </div>
         </div>
     </div>
+
+    <div id="logoutModal" class="modal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Konfirmasi Logout</h2>
+                <span class="close" onclick="closeLogoutModal()">&times;</span>
+            </div>
+            <div class="modal-body">
+                <p>Apakah Anda yakin ingin keluar?</p>
+            </div>
+            <div class="modal-footer">
+                <form action="{{ route('logout') }}" method="POST">
+                    @csrf
+                    <button type="button" class="btn-cancel" onclick="closeLogoutModal()">Batal</button>
+                    <button type="submit" class="btn-logout">Ya, Logout</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
     <footer class="row six">
         <div class="col col-1-row-6">
             <footer>© 2xxx - Company, Inc. All rights reserved. Address Address</footer>
@@ -113,6 +252,8 @@
     <script src="https://cdn.jsdelivr.net/npm/aos@2.3.4/dist/aos.js"></script>
     <!-- Font Awesome -->
     <script src="https://kit.fontawesome.com/your-kit-code.js" crossorigin="anonymous"></script>
+    <script src="{{ asset('js/modal.js') }}"></script>
+
     <script>
         AOS.init({
             duration: 1000,

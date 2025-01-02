@@ -3,6 +3,7 @@
 <head>
     <meta charset="utf-8">
     <title>Login - Admin</title>
+    <link rel="icon" href="{{ asset('img/about.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
@@ -13,7 +14,7 @@
     <link rel="stylesheet" href="{{ asset('wub/styles/styles.css') }}">
     <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Roboto+Mono:ital,wght@0,100..700;1,100..700&display=swap" rel="stylesheet">
 </head>
-<body class="container login-body bg-primary"> 
+<body class="container login-body bg-primary">
     <div class="login-modal">
         <h1>Login</h1>
         <img class="login-logo" src="{{ asset('wub/img/item.png') }}">

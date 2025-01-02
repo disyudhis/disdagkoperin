@@ -9,10 +9,12 @@ use App\Http\Controllers\AdminController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Middleware\RedirectIfAuthenticated;
 
+Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/information', [HomeController::class, 'information'])->name('informasi');
+Route::get('/tas', [AuthController::class, 'tas'])->name('tas');
+Route::get('/syarat-ketentuan', [HomeController::class, 'syaratKetentuan'])->name('sk');
+
 Route::middleware([RedirectIfAuthenticated::class])->group(function () {
-    Route::get('/', [HomeController::class, 'index'])->name('home');
-    Route::get('/information', [HomeController::class, 'information'])->name('informasi');
-    Route::get('/tas', [AuthController::class, 'tas'])->name('tas');
     Route::get('/loginWub', [AuthController::class, 'loginWub'])->name('loginWub');
     Route::post('/loginWub', [AuthController::class, 'postLogin'])->name('postLogin');
     Route::get('/registerWub', [AuthController::class, 'registerWub'])->name('registerWub');

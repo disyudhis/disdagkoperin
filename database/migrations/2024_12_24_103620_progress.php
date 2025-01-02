@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('progress', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('attendance_id')->nullable();
-            $table->foreign('attendance_id')->references('id')->on('attendance');
+            $table->foreign('attendance_id')->references('id')->on('attendance')->onDelete('cascade');
             $table->unsignedBigInteger('subtopic_id')->nullable();
-            $table->foreign('subtopic_id')->references('id')->on('subtopics');
+            $table->foreign('subtopic_id')->references('id')->on('subtopics')->onDelete('cascade');
             $table->boolean('is_completed')->default(false)->nullable();
             $table->timestamps();
         });

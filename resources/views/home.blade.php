@@ -21,7 +21,7 @@
                         <div class="card-body">
                             <img src="img/logo.png" alt="Service 1" class="img-fluid mb-3" style="max-width: 200px;">
                             <h3 class="card-title fw-bold">WUB</h3>
-                            <a href="http://localhost:8010/dashboard" class="btn btn-warning text-white">Learn More</a>
+                            <a href="http://localhost:8010" class="btn btn-warning text-white">Learn More</a>
                         </div>
                     </div>
                 </div>

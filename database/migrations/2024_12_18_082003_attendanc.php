@@ -15,9 +15,9 @@ return new class extends Migration
         Schema::create('attendance', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('user_id')->nullable();
-            $table->foreign('user_id')->references('id')->on('users');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             $table->unsignedBigInteger('workshop_id')->nullable();
-            $table->foreign('workshop_id')->references('id')->on('workshops');
+            $table->foreign('workshop_id')->references('id')->on('workshops')->onDelete('cascade');
             $table->timestamps();
         });
     }

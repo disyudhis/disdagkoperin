@@ -14,7 +14,7 @@ return new class extends Migration
         Schema::create('topics', function (Blueprint $table) {
             $table->id();
             $table->unsignedBigInteger('workshop_id')->nullable();
-            $table->foreign('workshop_id')->references('id')->on('workshops');
+            $table->foreign('workshop_id')->references('id')->on('workshops')->onDelete('cascade');
             $table->string('title')->nullable();
             $table->text('description')->nullable();
             $table->timestamps();

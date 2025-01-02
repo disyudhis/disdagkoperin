@@ -25,10 +25,6 @@
                         @enderror
                     </div>
 
-                    <div class="mb-4 small">
-                        Belum punya akun? buat <a href="{{ route('register') }}" class="text-decoration-none" style="color: #f97316;">disini</a>
-                    </div>
-
                     <button type="submit" class="btn w-100 text-uppercase fw-bold text-white" style="background-color: #f97316;">
                         Sign In
                     </button>

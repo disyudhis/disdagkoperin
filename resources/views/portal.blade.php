@@ -5,6 +5,7 @@
     <meta charset="utf-8">
     <meta name="description" content="">
     <title>Disdagkoperin KUKM - Portal</title>
+    <link rel="icon" href="{{ asset('img/about.png') }}">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -190,7 +191,7 @@
                 <h5 class="mb-3">Layanan Pengembangan Usaha Mikro</h5>
                 <p class="mb-4">Mulai sekarang untuk melihat informasi terkini dari <br class="d-none d-md-block">
                     Disdagkoperin KUKM!</p>
-                <button class="button-custom text-white">Get Started</button>
+                <a href="{{ route('loginPortal') }}" style="text-decoration: none" class="button-custom text-white">Get Started</a>
             </div>
         </div>
     </div>

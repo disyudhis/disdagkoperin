@@ -6,9 +6,11 @@
                     class="position-absolute top-50 start-50 translate-middle text-center p-4 bg-dark bg-opacity-50 rounded w-75">
                     <h2 class="text-white display-5 fw-bold">Bidang Koperasi Usaha Kecil Menengah (KUKM)</h2>
                     <p class="text-white mt-3">
-                        Morbi sit amet risus nisl. Fusce ut nunc tortor. Praesent faucibus id ligula id molestie. Sed
-                        ipsum enim, euismod a bibendum non, euismod ut velit. Maecenas sollicitudin enim non mollis
-                        tristique. Phasellus et nisl vitae magna placerat ornare et nec lorem.
+                        Koperasi Usaha Mikro, Kecil dan Menengah (UMKM) pada DISDAGKOPERIN Kota Cimahi merupakan
+                            bidang yang berperan dalam menggerakan perekonomian daerah. Peran bidang KUKM di
+                            DISDAGKOPERIN Kota Cimahi meliputi upaya peningkatan kualitas UMKM lokal melalui
+                            program-program yang mendorong inovasi, digitalisasi, dan peningkatan akses pasar bagi
+                            produk lokal.
                     </p>
                 </div>
             </div>

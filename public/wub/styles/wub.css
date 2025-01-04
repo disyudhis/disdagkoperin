@@ -12,6 +12,21 @@
 .custom-dropdown {
     background-color: #343a40; /* Warna dropdown */
 }
+.carousel-item {
+    cursor: pointer;
+}
+.hover-overlay:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.15) !important;
+    cursor: pointer;
+}
+
+.carousel-caption {
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 2rem;
+}
 
 /* Gaya untuk carousel */
 .carousel-item img {
@@ -21,8 +36,14 @@
 
 /* Gaya untuk card */
 .card {
-    transition: transform 0.2s; /* Efek transisi saat hover */
-    min-height: 300px; /* Mengatur tinggi minimum card */
+    border-radius: 10px;
+    border: none;
+    overflow: hidden;
+}
+
+.card-img-top {
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
 }
 
 .card:hover {
@@ -38,8 +59,9 @@
     left: 0;
     right: 0;
     height: 60px;
-    background-color: #333;
     z-index: 999;
+    color: white;
+    padding: 1rem 0;
 }
 
 /* Gaya untuk marquee */
@@ -203,9 +225,8 @@ body {
         margin: 0 -1rem;
     }
 
-    .table td, .table th {
+    .table td,
+    .table th {
         white-space: nowrap;
     }
 }
-
-

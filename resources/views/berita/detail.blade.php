@@ -1,32 +1,35 @@
-<x-layout title="{{$berita->title}}">
-    <main class="container mx-auto my-8 p-4 bg-white shadow-lg rounded-lg">
-        <article>
-            <h2 class="text-2xl font-bold mb-4">{{$berita->title}}</h2>
-            <div class="image-container mb-4">
-                <img src="{{$berita->image}}" alt="News Image" class="news-image">
-            </div>
-            <p class="text-gray-600 text-sm mb-4">{{$berita->created_at->diffForHumans()}}</p>
-            <div class="prose max-w-none">
-                <p>{{$berita->content}}</p>
-            </div>
-        </article>
-    </main>
+<x-layout title="{{ $berita->title }}">
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-lg-10">
+                <div class="card border-0 shadow-lg">
+                    {{-- Title Section --}}
+                    <div class="card-header bg-white border-0 pt-4 px-4 px-lg-5">
+                        <h1 class="display-5 fw-bold text-dark">{{ $berita->title }}</h1>
+                        <div class="d-flex align-items-center text-muted">
+                            <i class="bi bi-clock me-2"></i>
+                            <small>{{ $berita->created_at->diffForHumans() }}</small>
+                        </div>
+                    </div>
 
-    <style>
-        .image-container {
-            width: 100%; /* Full width of the parent */
-            height: 300px; /* Fixed height for the image */
-            overflow: hidden; /* Hide overflow */
-            position: relative; /* Position relative for absolute children */
-        }
+                    {{-- Image Section --}}
+                    <div class="card-body px-4 px-lg-5 pt-4">
+                        <div class="text-center mb-4">
+                            <img src="{{ $berita->image }}"
+                                 class="img-fluid rounded shadow-sm"
+                                 style="max-height: 600px; width: auto;"
+                                 alt="{{ $berita->title }}">
+                        </div>
 
-        .news-image {
-            width: 100%; /* Full width */
-            height: 100%; /* Full height */
-            object-fit: cover; /* Cover the container */
-            position: absolute; /* Position absolute to fill the container */
-            top: 0; /* Align to top */
-            left: 0; /* Align to left */
-        }
-    </style>
+                        {{-- Content Section --}}
+                        <div class="content fs-5">
+                            {!! nl2br(e($berita->content)) !!}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+   
 </x-layout>

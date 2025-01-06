@@ -46,7 +46,7 @@ return [
 
         'disdagkoperin' => [
             'driver' => 'local',
-            'root' => '../../../zdisdagg/disdagkoperin/storage/app/public',
+            'root' => env('ROOT_URL'),
             'url' => 'http://localhost:8000',
             'visibility' => 'public',
             'throw' => false,

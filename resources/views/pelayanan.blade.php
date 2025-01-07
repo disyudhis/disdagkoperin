@@ -33,7 +33,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center h-100">
-                        <img src="img/logo.png" class="card-img-top p-4" alt="Service 2"
+                        <img src="{{ asset('img/pelayanan-placeholder.jpg') }}" class="card-img-top p-4" alt="Service 2"
                             style="max-width: 200px; margin: auto;">
                         <div class="card-body">
                             <h3 class="card-title fw-bold">Lorem</h3>
@@ -43,7 +43,7 @@
                 </div>
                 <div class="col-md-4">
                     <div class="card text-center h-100">
-                        <img src="img/logo.png" class="card-img-top p-4" alt="Service 3"
+                        <img src="{{ asset('img/pelayanan-placeholder.jpg') }}" class="card-img-top p-4" alt="Service 3"
                             style="max-width: 200px; margin: auto;">
                         <div class="card-body">
                             <h3 class="card-title fw-bold">Lorem</h3>

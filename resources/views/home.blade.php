@@ -19,7 +19,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <img src="img/logo.png" alt="Service 1" class="img-fluid mb-3" style="max-width: 200px;">
+                            <img src="{{ asset('img/about.png') }}" alt="Service 1" class="img-fluid mb-3" style="max-width: 200px;">
                             <h3 class="card-title fw-bold">WUB</h3>
                             <a href="http://localhost:8010" class="btn btn-warning text-white">Learn More</a>
                         </div>
@@ -28,7 +28,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <img src="img/logo.png" alt="Service 2" class="img-fluid mb-3" style="max-width: 200px;">
+                            <img src="{{ asset('img/pelayanan-placeholder.jpg') }}" alt="Service 2" class="img-fluid mb-3" style="max-width: 200px;">
                             <h3 class="card-title fw-bold">Lorem</h3>
                             <button class="btn btn-warning text-white">Learn More</button>
                         </div>
@@ -37,7 +37,7 @@
                 <div class="col-md-4 col-sm-6">
                     <div class="card text-center h-100">
                         <div class="card-body">
-                            <img src="img/logo.png" alt="Service 3" class="img-fluid mb-3" style="max-width: 200px;">
+                            <img src="{{ asset('img/pelayanan-placeholder.jpg') }}" alt="Service 3" class="img-fluid mb-3" style="max-width: 200px;">
                             <h3 class="card-title fw-bold">Lorem</h3>
                             <button class="btn btn-warning text-white">Learn More</button>
                         </div>

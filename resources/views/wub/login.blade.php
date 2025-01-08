@@ -37,7 +37,6 @@
                 <span class="error-message" id="passwordError"></span>
             </div>
             <button class="sign-in_button" type="submit">Sign-In</button>
-            <p>Belum punya akun?, klik <a href="{{ route('registerWub') }}"><b>disini</b></a></p>
         </form>
     </div>
     <script src="wub/js/script.js"></script>

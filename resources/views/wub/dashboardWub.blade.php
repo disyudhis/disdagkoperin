@@ -151,7 +151,7 @@
                                 <i class="bi bi-clock"></i> {{ $item->created_at->diffForHumans() }}
                             </small>
                         </div>
-                        <p>{!! nl2br(e($item->description)) !!}</p>
+                        <p>{!! nl2br(e($item->content)) !!}</p>
                     </div>
                     <div class="modal-footer">
                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
